@@ -1,7 +1,7 @@
 //入口：微信收藏链接→http://m.kuntuzc.bar/?upuid=3437661
 //耗时5分钟（建议该脚本一天执行1-4次）
 APP_name = "微信"
-surl = "http://m.mimkwg.bar/?upuid=3437661"
+surl = "http://m.lgarden.club/r?upuid=6678498"
 
 function start() {
     launch(getPackageName(APP_name));
