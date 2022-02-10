@@ -1,12 +1,25 @@
 //耗时30分钟
-//APP必须是3.0.2版本，不要更新
+//APP必须是3.0.2版本，不要更新；重置设备及广告ID可解设备锁
 APP_name = "滑鸭趣看"
+Package_name = getPackageName(APP_name);
 
+
+//黑阈临时启动
 function start() {
-    launch(getPackageName(APP_name));
-    var sh = new Shell(true);
-    return sh;
+    home();
+    sleep(500);
+    text("执行指令").findOne().click();
+    id("command").setText("launch-instant " + Package_name);
+    sleep(500);
+    id("exec").findOne().click();
 }
+
+//常规启动
+// function start() {
+//     launch(getPackageName(APP_name));
+//     var sh = new Shell(true);
+//     return sh;
+// }
 
 function stop(sh) {
     sh.exec("am force-stop " + getPackageName(APP_name));

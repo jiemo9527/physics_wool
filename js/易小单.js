@@ -1,12 +1,25 @@
 //耗时5分钟
 //APP下载地址：http://gameforum.adspools.cn/appweb/index.html?appId=511&uid=7811365
 APP_name = "易小单";
+Package_name = getPackageName(APP_name);
 
+
+//黑阈临时启动
 function start() {
-    launch(getPackageName(APP_name));
-    var sh = new Shell(true);
-    return sh;
+    home();
+    sleep(500);
+    text("执行指令").findOne().click();
+    id("command").setText("launch-instant " + Package_name);
+    sleep(500);
+    id("exec").findOne().click();
 }
+
+//常规启动
+// function start() {
+//     launch(getPackageName(APP_name));
+//     var sh = new Shell(true);
+//     return sh;
+// }
 
 function stop(sh) {
     sh.exec("am force-stop " + getPackageName(APP_name));
