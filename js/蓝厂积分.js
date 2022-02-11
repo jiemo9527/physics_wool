@@ -8,7 +8,7 @@ function start() {
 }
 
 function stop(sh) {
-    sh.exec("am force-stop " + getPackageName(APP_name));
+    sh.exec("am force-stop " + getPackageName(APP_name[i]));
     sleep(1000);
     sh.exit;
     //toastLog("【" + APP_name + "】已完成计划任务并退出APP！");
@@ -24,6 +24,8 @@ function handle(name) {
     id("activity_credit_main_sign_btn").find().click();
     sleep(500);
     click("签到");
+    sleep(500);
+    click("立即签到");
     sleep(1000);
 }
 
@@ -32,3 +34,4 @@ for (i = 0; i < APP_name.length; i++) {
     handle(APP_name[i])
     stop(start1)
 }
+toastLog("蓝厂积分已完成并退出！");

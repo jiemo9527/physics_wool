@@ -21,7 +21,9 @@ function start() {
 //     return sh;
 // }
 
-function stop(sh) {
+function stop() {
+    launch(getPackageName(APP_name));
+    var sh = new Shell(true);
     sh.exec("am force-stop " + getPackageName(APP_name));
     sleep(1000);
     sh.exit;
@@ -52,7 +54,7 @@ function handle() {
 
 start1 = start()
 handle()
-stop(start1)
+stop()
 
 
 

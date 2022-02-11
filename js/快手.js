@@ -20,7 +20,9 @@ function start() {
 //     return sh;
 // }
 
-function stop(sh) {
+function stop() {
+    launch(getPackageName(APP_name));
+    var sh = new Shell(true);
     sh.exec("am force-stop " + getPackageName(APP_name));
     sleep(1000);
     sh.exit;
@@ -31,7 +33,7 @@ function handle() {
     id("thanos_home_top_search").waitFor();
     sleep(4000);
     Tap(500, 500);
-    back;
+    back();
     for (i = 0; i < 880; i++) {
         swipe(500, 1440, 500, 120, 500);
         sleep(2000);
@@ -45,7 +47,7 @@ function handle() {
 
 start1 = start()
 handle()
-stop(start1)
+stop()
 
 
 
