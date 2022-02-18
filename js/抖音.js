@@ -34,7 +34,7 @@ function handle() {
     sleep(2000);
     back();
     for (i = 0; i < 200; i++) {
-        swipe(500, 1440, 500, 120, 500);
+        swipe(500, 1540, 500, 220, 400);
         sleep(2000);
         // if (!id("redFloat").exists()) {
         //     swipe(500, 1600, 500, 250, 500);
