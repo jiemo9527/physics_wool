@@ -1,4 +1,5 @@
 //耗时11分钟
+//下载地址： https://m.xiaicn.cn/invite/89210
 APP_name = "喜爱帮";
 Package_name = getPackageName(APP_name);
 
@@ -32,6 +33,7 @@ function stop() {
 function handle() {
     text("我的").findOne().click();
     text("会员奖励").findOne().click();
+    text("每日任务").findOne().click();
     sleep(2000);
     for (i = 0; i < 10; i++) {
         if (!text("立即观看").exists()) {
@@ -42,6 +44,11 @@ function handle() {
         id("tt_video_ad_close_layout").findOne().click();
         sleep(2500);
     }
+    text("立即签到").findOne().click();
+    className("android.view.View").desc("立即签到 需观看一段广告视频").findOne().click();
+    id("tt_video_ad_close_layout").findOne().click();
+    sleep(1000);
+    text("领取奖励").find().click();
 
 
 }
