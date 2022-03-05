@@ -35,7 +35,7 @@ function handle() {
     text("会员奖励").findOne().click();
     text("每日任务").findOne().click();
     sleep(2000);
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 12; i++) {
         if (!text("立即观看").exists()) {
             text("领取奖励").find().click();
             break;
