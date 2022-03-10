@@ -1,5 +1,5 @@
-//耗时10分钟:仅限幸运用户
-APP_name = "快手";
+//耗时2小时
+APP_name = "快手极速版";
 Package_name = getPackageName(APP_name);
 
 
@@ -30,13 +30,18 @@ function stop() {
 }
 
 function handle() {
-    id("search_btn").waitFor();
-    sleep(1000);
+    id("thanos_home_top_search").waitFor();
+    sleep(4000);
     Tap(500, 500);
     back();
-    for (i = 0; i < 100; i++) {
-        sleep(5500);
-        swipe(500, 1440, 500, 120, 400);
+    for (i = 0; i < 880; i++) {
+        swipe(500, 1440, 500, 120, 500);
+        sleep(2000);
+        if (!id("redFloat").exists()) {
+            swipe(500, 1600, 500, 250, 500);
+        }
+        sleep(5000);
+        toastLog(APP_name + "计数器：" + (i + 1));
     }
 }
 
