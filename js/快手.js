@@ -32,7 +32,7 @@ function stop() {
 function handle() {
     id("search_btn").waitFor();
     sleep(1000);
-    Tap(500, 500);
+    //Tap(500, 500);
     back();
     for (i = 0; i < 100; i++) {
         sleep(5500);
