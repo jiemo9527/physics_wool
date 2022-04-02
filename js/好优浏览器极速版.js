@@ -1,4 +1,4 @@
-//耗时35分钟
+//耗时35分钟;同时适用于“好优浏览器”
 APP_name = "好优浏览器极速版";
 Package_name = getPackageName(APP_name);
 
