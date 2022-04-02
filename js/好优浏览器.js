@@ -1,6 +1,6 @@
-//耗时35分钟;同时适用于“好优浏览器”数据独立
+//耗时35分钟
 APP_name = "好优浏览器极速版";
-Package_name = getPackageName(APP_name);
+Package_name = "com.haoyou.browser";
 
 
 //黑阈临时启动
@@ -16,7 +16,7 @@ function start() {
 //常规启动
 // function start() {
 //     launch(getPackageName(APP_name));
-//     var sh = new Shell(true);
+//     var sh = new Shell(true); 
 //     return sh;
 // }
 
@@ -36,16 +36,20 @@ function handle() {
     sleep(1000);
     //刷金币=30分钟
     id("title_alipay").className("android.widget.TextView").text("视频").findOne().parent().click();
-    for (i = 0; i < 230; i++) {
+    for (i = 0; i < 2; i++) {
         swipe(500, 1440, 500, 120, 400);
         sleep(7000);
     }
     //阅读120s加签到=5分钟
     id("title_alipay").className("android.widget.TextView").text("首页").findOne().parent().click();
+    sleep(500);
+    Tap(500, 600);
+    sleep(5000);
     for (i = 0; i < 14; i++) {
         swipe(500, 1440, 500, 120, 400);
         sleep(10 * 1000);
     }
+    back();
     sleep(2000);
     id("img_sign").findOne().click();
     sleep(1000);
