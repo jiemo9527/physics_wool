@@ -36,7 +36,7 @@ function handle() {
     sleep(1000);
     //刷金币=30分钟
     id("title_alipay").className("android.widget.TextView").text("视频").findOne().parent().click();
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < 230; i++) {
         swipe(500, 1440, 500, 120, 400);
         sleep(7000);
     }
