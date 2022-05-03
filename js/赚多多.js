@@ -34,10 +34,10 @@ function handle() {
     id("arg").className("android.widget.ImageView").clickable(true).findOne().click();
     sleep(4500);
     for (i = 0; i < 36; i++) {
-        Tap(500, 1050);
+        Tap(500, 1170);
         sleep(5000);
         if (text("游戏赚").exists()) {
-            Tap(500, 1050);
+            Tap(500, 1170);
         }
         id("ksad_end_close_btn").findOne().click();
         sleep(4000);
