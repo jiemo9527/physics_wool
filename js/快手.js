@@ -36,6 +36,9 @@ function handle() {
     back();
     for (i = 0; i < 100; i++) {
         sleep(5500);
+        if (id("live_simple_play_swipe_text").exists()) {
+            back();
+        }
         swipe(500, 1440, 500, 120, 400);
     }
 }
