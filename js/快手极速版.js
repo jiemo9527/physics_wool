@@ -37,7 +37,7 @@ function handle() {
     for (i = 0; i < 880; i++) {
         swipe(500, 1600, 500, 120, 500);
         sleep(2000);
-        if (!id("redFloat").exists()) {
+        if (id("live_simple_play_swipe_text").exists()) {
             back();
         }
         sleep(5000);
