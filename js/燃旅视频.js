@@ -1,4 +1,4 @@
-//耗时7分钟
+//耗时5分钟
 APP_name = "燃旅视频"
 Package_name = getPackageName(APP_name);
 
@@ -34,9 +34,9 @@ function handle() {
     back();
     id("main_home").findOne().click();
     sleep(2000);
-    for (var i = 1; i <= 40; i++) {
+    for (var i = 1; i <= 20; i++) {
         sleep(10000);
-        swipe(800, 1500, 800, 300, 500);
+        swipe(800, 1600, 800, 150, 500);
     }
 }
 
