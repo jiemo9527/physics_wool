@@ -35,10 +35,10 @@ function handle() {
     Tap(500, 500);
     back();
     for (i = 0; i < 880; i++) {
-        swipe(500, 1440, 500, 120, 500);
+        swipe(500, 1600, 500, 120, 500);
         sleep(2000);
         if (!id("redFloat").exists()) {
-            swipe(500, 1600, 500, 250, 500);
+            back();
         }
         sleep(5000);
         toastLog(APP_name + "计数器：" + (i + 1));
