@@ -63,7 +63,7 @@ function handle() {
     sleep(3500);
 }
 
-log(formatDate());
+
 start1 = start()
 handle()
 stop()
