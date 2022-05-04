@@ -57,7 +57,8 @@ function get_dsec_id() {
 
 function handle() {
     className("android.widget.ImageView").desc("热门搜索词").waitFor();
-    Tap(895, 140);
+    sleep(500);
+    Tap(200, 800);
     sleep(2000);
     className("android.view.View").desc(get_dsec_id()).findOne().click()
     sleep(3500);
