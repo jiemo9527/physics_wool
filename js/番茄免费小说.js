@@ -1,5 +1,5 @@
-//耗时2小时
-APP_name = "快手极速版";
+//后台无耗时
+APP_name = "番茄免费小说";
 Package_name = getPackageName(APP_name);
 
 
@@ -30,20 +30,13 @@ function stop() {
 }
 
 function handle() {
-    id("thanos_home_top_search").waitFor();
-    sleep(3000);
-    // Tap(500, 500);
-    back();
+    id("bdd").waitFor();
     sleep(1000);
-    for (i = 0; i < 880; i++) {
-        swipe(500, 1600, 500, 120, 500);
-        sleep(2000);
-        if (id("live_simple_play_swipe_text").exists()) {
-            back();
-        }
-        sleep(5000);
-        toastLog(APP_name + "计数器：" + (i + 1));
-    }
+    click("继续听");
+    sleep(3000);
+    home();
+    sleep(3 * 3600 * 1000);
+    sleep(4500);
 }
 
 start1 = start()
