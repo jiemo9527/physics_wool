@@ -1,4 +1,4 @@
-//耗时35分钟
+//耗时10分钟
 APP_name = "好优浏览器极速版";
 Package_name = "com.hyllq";
 
@@ -34,15 +34,15 @@ function handle() {
     sleep(5000);
     id("img_close").find().click();
     sleep(1000);
-    //刷金币=30分钟
+
     id("title_alipay").className("android.widget.TextView").text("视频").findOne().parent().click();
-    for (i = 0; i < 230; i++) {
+    for (i = 0; i < 50; i++) {
         swipe(500, 1440, 500, 120, 400);
         sleep(7000);
     }
-    //阅读120s加签到=5分钟
+
     id("title_alipay").className("android.widget.TextView").text("首页").findOne().parent().click();
-    for (i = 0; i < 14; i++) {
+    for (i = 0; i < 35; i++) {
         swipe(500, 1440, 500, 120, 400);
         sleep(10 * 1000);
     }
