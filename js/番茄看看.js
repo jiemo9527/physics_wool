@@ -34,7 +34,7 @@ function handle() {
     Tap(500, 750);
     sleep(7000);
     //开始自动阅读
-    for (i = 0; i < 26; i++) {
+    for (i = 0; i < 30; i++) {
         sleep(3000);
         back();
         sleep(7000);
