@@ -1,8 +1,8 @@
 //平台复活了！
-//入口：微信收藏链接→http://m.nykgar.bar/fast_reada
+//入口：微信收藏链接→http://m.lvipcc.bar/fast_reada?upuid=3437661
 //耗时5分钟（建议该脚本一天执行1-3次）
 APP_name = "微信"
-surl = "http://m.nykgar.bar/fast_reada"
+surl = "http://m.lvipcc.bar/fast_reada?upuid=3437661"
 
 function start() {
     launch(getPackageName(APP_name));
