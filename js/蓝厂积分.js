@@ -21,6 +21,8 @@ function handle(name) {
     }
     sleep(1000);
     click("签到");
+    sleep(1000);
+    click("赚积分");
     id("activity_credit_main_sign_btn").find().click();
     sleep(500);
     click("签到");
