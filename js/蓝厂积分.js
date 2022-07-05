@@ -1,5 +1,5 @@
 //耗时2分钟
-APP_name = ["软件商店", "OPPO 商城", "我的一加", "主题商店"]
+APP_name = ["软件商店", "OPPO 商城", "我的一加"]
 
 function start() {
     launch(getPackageName(APP_name[i]));

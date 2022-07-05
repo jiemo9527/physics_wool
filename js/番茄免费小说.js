@@ -30,9 +30,9 @@ function stop() {
 }
 
 function handle() {
-    id("bdd").waitFor();
-    sleep(1000);
-    click("继续听");
+    id("c2d").waitFor();
+    sleep(3000);
+    Tap(450,1960);
     sleep(3000);
     home();
     sleep(3 * 3600 * 1000);
