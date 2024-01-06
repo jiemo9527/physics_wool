@@ -1,5 +1,5 @@
-APP_name1 = "内存杀手";
-Package_name1 = getPackageName(APP_name1); 
+APP_name = "内存杀手";
+Package_name = getPackageName(APP_name); 
 
  
  
@@ -16,7 +16,6 @@ function start(Package_name) {
 
  
 function stop(Package_name) { 
-    launch(getPackageName(APP_name)); 
     var sh = new Shell(true); 
     sh.exec("am force-stop " + Package_name); 
     sleep(1000); 
@@ -25,10 +24,10 @@ function stop(Package_name) {
 } 
  
 function handle() {
-    start(Package_name1);
+    start(Package_name);
     id("button").findOne().click(); 
-    sleep(25*1000);
-  stop(Package_name1);
+    sleep(58*1000);
+    stop(Package_name);
 } 
 
 handle()

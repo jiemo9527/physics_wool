@@ -21,7 +21,6 @@ function start0() {
 }
 
 function stop() {
-    launch(getPackageName(APP_name));
     var sh = new Shell(true);
     sh.exec("am force-stop " + Package_name);
     sleep(1000);
