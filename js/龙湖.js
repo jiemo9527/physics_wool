@@ -1,0 +1,129 @@
+//耗时忽略
+APP_name = "龙湖U享家"; 
+Package_name = getPackageName(APP_name); 
+ 
+ 
+//黑阈临时启动APP
+function start() {
+    home();
+    sleep(500);
+    text("执行指令").findOne().click();
+    id("command").setText("launch-instant " + Package_name);
+    sleep(600);
+    id("exec").findOne().click();
+}
+
+//常规启动APP
+function start0() {
+    launch(getPackageName(APP_name));
+    var sh = new Shell(true);
+    return sh;
+}
+//退出APP
+function stop() {
+    launch(getPackageName(APP_name));
+    var sh = new Shell(true);
+    sh.exec("am force-stop " + Package_name);
+    sleep(1000);
+    sh.exit;
+    toastLog("【" + APP_name + "】已完成计划任务并退出APP！");
+}
+//点击clickable=false的元素
+function clickNonClickable(targetText, maxRetries, retryDelay) {
+    for (var attempt = 1; attempt <= maxRetries; attempt++) {
+        var target = text(targetText).findOne();
+
+        if (target) {
+            // 尝试直接使用click函数点击目标控件
+            if (target.clickable()) {
+                target.click();
+                return;
+            } else {
+                // 如果clickable属性为false，尝试使用坐标点击
+                var centerX = target.bounds().centerX();
+                var centerY = target.bounds().centerY();
+
+                click(centerX, centerY);
+                return;
+            }
+        } else {
+            sleep(retryDelay);
+        }
+    }
+    toast("达到最大重试次数，点击" + targetText + "失败");
+}
+
+//点击置顶层元素
+function clickToplayerByText(buttonText) {
+    // 通过元素识别方法获取目标按钮的坐标
+    var targetButton = text(buttonText).findOne();
+    if (!targetButton) {
+        toast("未找到目标按钮：" + buttonText);
+        return false;
+    }
+    // 获取目标按钮的坐标
+    var targetButtonX = targetButton.bounds().centerX();
+    var targetButtonY = targetButton.bounds().centerY();
+    // 模拟点击目标按钮
+    gesture(500, [targetButtonX, targetButtonY], [targetButtonX, targetButtonY], [targetButtonX, targetButtonY]);
+    return true;
+}
+//Tap坐标bounds（适应分辨率）
+function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
+    // 解析传入的bounds字符串
+    var regex = /\((\d+),(\d+),(\d+),(\d+)\)/;
+    var match = boundsString.match(regex);
+
+    if (!match) {
+        console.error("传入的bounds格式不正确");
+        return;
+    }
+
+    // 获取设备宽度和高度
+    var screenWidth = device.width;
+    var screenHeight = device.height;
+
+    // 计算目标区域的中心点坐标
+    var left = parseInt(match[1]) * screenWidth / 1080; // 1080是假设的标准分辨率
+    var top = parseInt(match[2]) * screenHeight / 2400; // 1920是假设的标准分辨率
+    var right = parseInt(match[3]) * screenWidth / 1080;
+    var bottom = parseInt(match[4]) * screenHeight / 2400;
+
+    var centerX = (left + right) / 2;
+    var centerY = (top + bottom) / 2;
+
+    // 输出调试信息
+    // console.log("目标区域中心点坐标：" + centerX + ", " + centerY);
+
+    // 使用click函数点击目标区域的中心点
+    Tap(centerX, centerY);
+}
+
+
+function handle() {
+    id("tiv_mine").findOne().click();
+    sleep(500);
+    clickNonClickable("明细", 3, 500);
+    clickNonClickable("去使用", 3, 500);
+    sleep(4500);
+    clickNonClickableByBounds("(0,1433,1080,1613)", 3, 500);
+    sleep(3800);
+    clickNonClickable("返回", 3, 500);
+    sleep(4500);
+    clickNonClickableByBounds("(0,1610,1080,1769)", 3, 500);   //S2
+    clickNonClickable("获取更多抽奖机会", 3, 500);
+    sleep(1000);
+    clickNonClickable("签 到", 3, 500);
+    // sleep(1000);
+    // clickNonClickable("返回", 3, 500);
+    // sleep(1000);
+    // clickNonClickableByBounds("(0,1610,1080,1769)", 3, 500); //S2
+    // sleep(1000);
+    // clickNonClickableByBounds("(117,1712,963,1847)", 3, 500); //马上抽奖
+    sleep(99999);
+
+} 
+ 
+start1 = start() 
+handle() 
+stop()

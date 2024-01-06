@@ -47,7 +47,7 @@ function handle() {
     className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
     id("d0b").findOne().click();
     sleep(500);
-    home();
+    //home();
     sleep(3 * 3600 * 1000);
 
 } 
