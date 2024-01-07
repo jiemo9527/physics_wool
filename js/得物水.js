@@ -1,11 +1,13 @@
 while(true){
-  var x = 1250;
-  var y = 2550;
-  x = x / 1440 * device.width
-  y = y / 3168 * device.height
+  var x = 1200;
+  var y = 2350;
   var duration = 20000;
 
-  press(duration, x, y);
-  sleep(2500);
+  press(x, y, duration);
+
+  function press(x, y, duration) {
+    gesture(duration, [x, y], [x, y]);
+    }
+    sleep(2500);
 
 }
