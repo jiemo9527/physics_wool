@@ -117,7 +117,7 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
 }
 
 //点击第n个text/id;可超时
-function clickNthNonClickableN(selector, n, maxRetries, retryDelay) {
+function clickNonClickableN(selector, n, maxRetries, retryDelay) {
     var foundCount = 0;
 
     for (var attempt = 1; attempt <= maxRetries; attempt++) {
