@@ -1,3 +1,7 @@
+//耗时
+APP_name = "新氧医美";
+Package_name = getPackageName(APP_name);
+
 //黑阈临时启动APP
 function start() {
     home();
@@ -113,7 +117,7 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
     // console.log("目标区域中心点坐标：" + centerX + ", " + centerY);
 
     // 使用click函数点击目标区域的中心点
-    click(centerX, centerY);
+    Tap(centerX, centerY);
 }
 
 //点击第n个text/id;可超时
@@ -154,3 +158,35 @@ function clickNonClickableN(selector, n, maxRetries, retryDelay) {
     toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
 }
 
+
+function handle() {
+    clickNonClickableN("#imgClose", 1, 2, 3500);
+    clickNonClickable("我的", 3, 600);
+    clickNonClickable("福利社", 3, 600);
+    sleep(4500);
+    //swipe(600,1000,700,1000,499);
+    sleep(1500);
+    clickNonClickable("#task_center_footer_txv", 3, 600);
+    sleep(500);
+    //滑0.9屏
+    var screenHeight = device.height;
+    swipe(device.width / 2, screenHeight - 200, device.width / 2, 0, 500);
+    sleep(1500);
+    for (i = 0; i < 5; i++) {
+        clickNonClickable("券后", 5, 1500);
+        sleep(4000);
+        back();
+        sleep(500);
+        swipe(device.width / 2, screenHeight - 200, device.width / 2, 0, 500);
+        sleep(1500);
+    }
+    back();
+    sleep(1500)
+    clickNonClickable("福利社", 3, 600);
+    clickNonClickable("#tv_status", 6, 700);
+}
+
+
+start()
+handle()
+stop()
