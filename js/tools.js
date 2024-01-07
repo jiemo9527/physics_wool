@@ -25,10 +25,18 @@ function stop() {
     toastLog("【" + APP_name + "】已完成计划任务并退出APP！");
 }
 
-//点击text;单个/首个目标
-function clickNonClickable(targetText, maxRetries, retryDelay) {
+//点击text/id;单个/首个目标
+function clickNonClickable(selector, maxRetries, retryDelay) {
     for (var attempt = 1; attempt <= maxRetries; attempt++) {
-        var target = text(targetText).findOne();
+        var target = null;
+
+        if (selector.startsWith("#")) {
+            // 如果选择器以"#"开头，表示使用id
+            target = id(selector.substring(1)).findOne();
+        } else {
+            // 否则，默认使用text
+            target = text(selector).findOne();
+        }
 
         if (target) {
             // 尝试直接使用click函数点击目标控件
@@ -47,22 +55,33 @@ function clickNonClickable(targetText, maxRetries, retryDelay) {
             sleep(retryDelay);
         }
     }
-    toast("达到最大重试次数，点击" + targetText + "失败");
+    toast("达到最大重试次数，点击" + selector + "失败");
 }
 
-//点击置顶层text
-function clickToplayerByText(buttonText) {
+//点击置顶层text/id
+function clickToplayer(selector) {
     // 通过元素识别方法获取目标按钮的坐标
-    var targetButton = text(buttonText).findOne();
-    if (!targetButton) {
-        toast("未找到目标按钮：" + buttonText);
+    var targetElement = null;
+
+    if (selector.startsWith("#")) {
+        // 如果选择器以"#"开头，表示使用id
+        targetElement = id(selector.substring(1)).findOne();
+    } else {
+        // 否则，默认使用text
+        targetElement = text(selector).findOne();
+    }
+
+    if (!targetElement) {
+        toast("未找到目标元素：" + selector);
         return false;
     }
-    // 获取目标按钮的坐标
-    var targetButtonX = targetButton.bounds().centerX();
-    var targetButtonY = targetButton.bounds().centerY();
-    // 模拟点击目标按钮
-    gesture(500, [targetButtonX, targetButtonY], [targetButtonX, targetButtonY], [targetButtonX, targetButtonY]);
+
+    // 获取目标元素的坐标
+    var targetX = targetElement.bounds().centerX();
+    var targetY = targetElement.bounds().centerY();
+
+    // 模拟点击目标元素
+    gesture(500, [targetX, targetY], [targetX, targetY], [targetX, targetY]);
     return true;
 }
 
@@ -97,12 +116,12 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
     Tap(centerX, centerY);
 }
 
-//点击第n个text;可超时
-function clickNthNonClickableN(targetText, n, maxRetries, retryDelay) {
+//点击第n个text/id;可超时
+function clickNthNonClickableN(selector, n, maxRetries, retryDelay) {
     var foundCount = 0;
 
     for (var attempt = 1; attempt <= maxRetries; attempt++) {
-        var targets = text(targetText).find();
+        var targets = selector.startsWith("#") ? id(selector.substring(1)).find() : text(selector).find();
         if (targets.length > 0) {
             // 检查是否存在足够的匹配项
             if (foundCount + targets.length >= n) {
@@ -132,5 +151,5 @@ function clickNthNonClickableN(targetText, n, maxRetries, retryDelay) {
             sleep(retryDelay);
         }
     }
-    toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + targetText);
+    toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
 }

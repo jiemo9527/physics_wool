@@ -1,4 +1,4 @@
-//耗时忽略
+//耗时3-5分钟
 APP_name = "返利"; 
 Package_name = getPackageName(APP_name); 
  
