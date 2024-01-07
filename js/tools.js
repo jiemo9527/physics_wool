@@ -1,8 +1,3 @@
-//耗时忽略
-APP_name = "龙湖U享家"; 
-Package_name = getPackageName(APP_name); 
- 
- 
 //黑阈临时启动APP
 function start() {
     home();
@@ -19,6 +14,7 @@ function start0() {
     var sh = new Shell(true);
     return sh;
 }
+
 //退出APP
 function stop() {
     launch(getPackageName(APP_name));
@@ -28,7 +24,8 @@ function stop() {
     sh.exit;
     toastLog("【" + APP_name + "】已完成计划任务并退出APP！");
 }
-//点击clickable=false的元素
+
+//点击text;单个/首个目标
 function clickNonClickable(targetText, maxRetries, retryDelay) {
     for (var attempt = 1; attempt <= maxRetries; attempt++) {
         var target = text(targetText).findOne();
@@ -53,7 +50,7 @@ function clickNonClickable(targetText, maxRetries, retryDelay) {
     toast("达到最大重试次数，点击" + targetText + "失败");
 }
 
-//点击置顶层元素
+//点击置顶层text
 function clickToplayerByText(buttonText) {
     // 通过元素识别方法获取目标按钮的坐标
     var targetButton = text(buttonText).findOne();
@@ -68,7 +65,8 @@ function clickToplayerByText(buttonText) {
     gesture(500, [targetButtonX, targetButtonY], [targetButtonX, targetButtonY], [targetButtonX, targetButtonY]);
     return true;
 }
-//Tap坐标bounds（适应分辨率）
+
+//Tap/click/press:坐标bounds（适应分辨率）
 function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
     // 解析传入的bounds字符串
     var regex = /\((\d+),(\d+),(\d+),(\d+)\)/;
@@ -99,7 +97,7 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
     Tap(centerX, centerY);
 }
 
-//点击第n个&可超时
+//点击第n个text;可超时
 function clickNthNonClickableN(targetText, n, maxRetries, retryDelay) {
     var foundCount = 0;
 
@@ -136,33 +134,3 @@ function clickNthNonClickableN(targetText, n, maxRetries, retryDelay) {
     }
     toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + targetText);
 }
-
-
-function handle() {
-    id("tiv_mine").findOne().click();
-    sleep(500);
-    clickNonClickable("明细", 3, 500);
-    clickNonClickable("去使用", 3, 500);
-    sleep(4500);
-    clickNonClickableByBounds("(0,1433,1080,1613)", 3, 500);
-    sleep(3800);
-    clickNonClickable("返回", 3, 500);
-    sleep(4500);
-    clickNonClickableByBounds("(0,1610,1080,1769)", 3, 500);   //S2
-    clickNonClickable("获取更多抽奖机会", 3, 500);
-    sleep(1000);
-    clickNthNonClickableN("签 到", 1,2, 500);//clickNonClickable("签 到", 3, 500);
-    sleep(1000);
-    clickNonClickable("返回", 3, 500);
-    sleep(2900);
-    clickNonClickableByBounds("(0,1610,1080,1769)", 3, 500); //S2
-    sleep(3000);
-    //马上抽奖
-    click(500/1080*device.width,1795/2400*device.height);
-    sleep(6500);
-
-} 
- 
-start1 = start() 
-handle() 
-stop()

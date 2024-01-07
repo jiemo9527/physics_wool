@@ -140,8 +140,9 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
 
 
 function handle() {
-    clickNthNonClickable("签到赚钱", 3, 500);
+    clickNthNonClickable("签到赚钱", 3, 1000);
     clickNthNonClickable("sign_icon", 3, 500);
+    clickNthNonClickableN("开心收下", 1, 3, 500);
     sleep(4100);
     if(text("去完成").exists()){
         clickNthNonClickableN("去完成", 1, 2, 1000);
@@ -151,17 +152,17 @@ function handle() {
     //见鬼！for和while都不好使
     for(i=0;i<2;i++){
         clickNthNonClickableN("20221031110438_10356", 3, 2, 4000);
-        sleep(44*1000);
+        sleep(52.5*1000);
         clickNthNonClickable("| 跳过", 2, 500);   
         sleep(5000);
 
         clickNthNonClickableN("20221031110438_10356", 2, 2, 4000);
-        sleep(44*1000);
+        sleep(52.5*1000);
         clickNthNonClickable("| 跳过", 2, 500);
         sleep(5000);
 
         clickNthNonClickableN("20221031110438_10356", 1, 2, 4000);
-        sleep(44*1000);
+        sleep(52.5*1000);
         clickNthNonClickable("| 跳过", 2, 500);
         sleep(5000);
     }
