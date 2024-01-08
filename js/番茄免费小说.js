@@ -1,4 +1,4 @@
-//后台无耗;v59332
+//耗时约3小时;v59332
 APP_name = "番茄免费小说";
 Package_name = getPackageName(APP_name);
 

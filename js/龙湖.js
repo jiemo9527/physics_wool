@@ -1,4 +1,4 @@
-//耗时忽略
+//耗时1分钟内
 APP_name = "龙湖U享家"; 
 Package_name = getPackageName(APP_name); 
  

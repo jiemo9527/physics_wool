@@ -55,9 +55,10 @@ function clickNonClickable(targetText, maxRetries, retryDelay) {
 function handle() {
     clickNonClickable("签到赚钱", 3, 500);
     sleep(6500);
-    if (text("立即签到 +30 ").exists()) {
-        clickNonClickable("立即签到 +30 ", 3, 500);
-    }
+    //if (text("立即签到 +30 ").exists()) {
+    //    clickNonClickable("立即签到 +30 ", 3, 500);
+    //}
+    click("立即签到");
     sleep(2500);
 }
 

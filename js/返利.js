@@ -140,6 +140,7 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
 
 
 function handle() {
+    sleep(5500);
     clickNthNonClickable("签到赚钱", 3, 1000);
     clickNthNonClickable("sign_icon", 3, 500);
     clickNthNonClickableN("开心收下", 1, 3, 500);
@@ -157,16 +158,19 @@ function handle() {
         sleep(5000);
 
         clickNthNonClickableN("20221031110438_10356", 2, 2, 4000);
-        sleep(52.5*1000);
+        sleep(52.5 * 1000);
         clickNthNonClickable("| 跳过", 2, 500);
         sleep(5000);
 
         clickNthNonClickableN("20221031110438_10356", 1, 2, 4000);
-        sleep(52.5*1000);
+        sleep(52.5 * 1000);
         clickNthNonClickable("| 跳过", 2, 500);
         sleep(5000);
     }
-
+    clickNthNonClickableN("20221031110438_10356", 3, 2, 4000);
+    sleep(52.5 * 1000);
+    clickNthNonClickable("| 跳过", 2, 500);
+    sleep(5000);
 
 }
 
