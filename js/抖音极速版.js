@@ -1,5 +1,5 @@
 //耗时20分钟
-APP_name = "快手极速版";
+APP_name = "抖音极速版";
 Package_name = getPackageName(APP_name);
 
 //黑阈临时启动APP
@@ -178,11 +178,10 @@ function BrushVideos(a,b){
 
 
 
-
 function handle() {
-    clickNonClickable("首页", 3, 500);
-    sleep(3900);
-    BrushVideos(241, 369);
+    clickNonClickable("#content_layout", 3, 500);
+    sleep(4100);
+    BrushVideos(139, 176);
 }
 
 start1 = start()
