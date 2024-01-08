@@ -1,3 +1,7 @@
+//耗时
+APP_name = "";
+Package_name = getPackageName(APP_name);
+
 //黑阈临时启动APP
 function start() {
     home();
