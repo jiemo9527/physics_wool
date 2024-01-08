@@ -1,5 +1,5 @@
 //耗时约3小时
-APP_name = "蛋花免费小说";
+APP_name = "常读免费小说";
 Package_name = getPackageName(APP_name);
 
 
@@ -89,28 +89,35 @@ function clickNonClickableN(selector, n, maxRetries, retryDelay) {
     toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
 }
 
+//浮窗当前APP
+function FloatingCurrentAPP() {
+    sleep(500);
+    // 打开多任务视图
+    recents();
+    desc("更多").findOne().click();
+    sleep(150);
+    click("浮窗");
+}
 
 function handle() {
-    sleep(3800);
-    if (id("c0p").exists()) {
+    sleep(4100);
+    if (id("c09").exists()) {
         className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
     } else {
-        id("xl").waitFor();
+        id("xg").waitFor();
         sleep(100);
         if (text("继续听").exists()) {
             clickNonClickable("继续听", 2, 500);
         } else {
-            clickNonClickable("继续阅读", 3, 500);
+            clickNonClickable("继续阅读", 2, 500);
             className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
-
         }
     }
-    id("d3u").findOne().click();
-    sleep(500);
+    id("d36").findOne().click();
+    sleep(2000);
     click(device.width / 2, device.height / 2);
-    //FloatingCurrentAPP();
+    FloatingCurrentAPP();
     sleep(3 * 3600 * 1000);
-
 
 }
 
