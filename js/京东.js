@@ -181,7 +181,7 @@ function handle() {
     sleep(3700);
     clickNonClickable("逛", 3, 500);
     sleep(4300);
-    BrushVideos(241, 394);
+    BrushVideos(241, 369);
 }
 
 start1 = start()
