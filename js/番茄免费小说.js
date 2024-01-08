@@ -88,29 +88,30 @@ function clickNonClickableN(selector, n, maxRetries, retryDelay) {
     toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
 }
 
+function FloatingCurrentAPP() {
+    sleep(500);
+    // 打开多任务视图
+    recents();
+    desc("更多").findOne().click();
+    sleep(150);
+    click("浮窗");
+}
 
 
 function handle() {
     id("v4").waitFor();
     sleep(2900);
-    if(text("继续听").exists()){
+    if (text("继续听").exists()) {
         clickNonClickable("继续听", 2, 500);
-        // clickNonClickable("#a84", 2, 500);
-        id("d0b").findOne().click();
-        sleep(500);
-        click(device.width/2,device.height/2);
-        //home();
-        sleep(3 * 3600 * 1000);
-    }else{
+    } else {
         clickNonClickable("继续阅读", 3, 500);
         className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
-        id("d0b").findOne().click();
-        sleep(500);
-        click(device.width/2,device.height/2);
-        //home();
-        sleep(3 * 3600 * 1000);
     }
-
+    id("d0b").findOne().click();
+    sleep(500);
+    click(device.width / 2, device.height / 2);
+    FloatingCurrentAPP();
+    sleep(3 * 3600 * 1000);
 
 } 
  

@@ -177,6 +177,7 @@ function BrushVideos(a,b){
 
 //浮窗当前APP
 function FloatingCurrentAPP() {
+    sleep(500);
     // 打开多任务视图
     recents();
     desc("更多").findOne().click();
