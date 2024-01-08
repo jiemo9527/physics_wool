@@ -148,7 +148,9 @@ function handle() {
     if(text("去完成").exists()){
         clickNthNonClickableN("去完成", 1, 2, 1000);
         sleep(11000);
-        id("iv_left").findOne().click();
+        clickNthNonClickableN("#iv_left", 1, 3, 500);
+        clickNthNonClickableN("#com_taobao_nb_sdk_web_view_title_bar_back_button", 1, 3, 500);
+
     }
     //见鬼！for和while都不好使
     for(i=0;i<2;i++){
