@@ -1,4 +1,4 @@
-//耗时3-5分钟
+//耗时6分钟
 APP_name = "返利"; 
 Package_name = getPackageName(APP_name); 
  
@@ -140,7 +140,7 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
 
 
 function handle() {
-    sleep(5500);
+    sleep(3400);
     clickNthNonClickable("签到赚钱", 3, 1000);
     clickNthNonClickable("sign_icon", 3, 500);
     clickNthNonClickableN("开心收下", 1, 3, 500);
@@ -148,30 +148,29 @@ function handle() {
     if(text("去完成").exists()){
         clickNthNonClickableN("去完成", 1, 2, 1000);
         sleep(11000);
-        clickNthNonClickableN("#iv_left", 1, 3, 500);
-        clickNthNonClickableN("#com_taobao_nb_sdk_web_view_title_bar_back_button", 1, 3, 500);
+        back();
 
     }
     //见鬼！for和while都不好使
     for(i=0;i<2;i++){
         clickNthNonClickableN("20221031110438_10356", 3, 2, 4000);
         sleep(52.5*1000);
-        clickNthNonClickable("| 跳过", 2, 500);   
+        clickNthNonClickableN("| 跳过",1, 2, 500);   
         sleep(5000);
 
         clickNthNonClickableN("20221031110438_10356", 2, 2, 4000);
         sleep(52.5 * 1000);
-        clickNthNonClickable("| 跳过", 2, 500);
+        clickNthNonClickableN("| 跳过", 1,2, 500);
         sleep(5000);
 
         clickNthNonClickableN("20221031110438_10356", 1, 2, 4000);
         sleep(52.5 * 1000);
-        clickNthNonClickable("| 跳过", 2, 500);
+        clickNthNonClickableN("| 跳过", 1,2, 500);
         sleep(5000);
     }
     clickNthNonClickableN("20221031110438_10356", 3, 2, 4000);
     sleep(52.5 * 1000);
-    clickNthNonClickable("| 跳过", 2, 500);
+    clickNthNonClickableN("| 跳过", 1,2, 500);
     sleep(5000);
 
 }

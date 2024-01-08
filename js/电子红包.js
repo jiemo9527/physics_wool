@@ -3,57 +3,6 @@ APP_name = "电子红包";
 Package_name = getPackageName(APP_name);
 
 
-//黑阈临时启动
-function start() {
-    home();
-    sleep(500);
-    text("执行指令").findOne().click();
-    id("command").setText("launch-instant " + Package_name);
-    sleep(700);
-    id("exec").findOne().click();
-}
-
-//常规启动
-function start0() {
-    launch(getPackageName(APP_name));
-    var sh = new Shell(true);
-    return sh;
-}
-
-function stop() {
-    var sh = new Shell(true);
-    sh.exec("am force-stop " + Package_name);
-    sleep(1000);
-    sh.exit;
-    toastLog("【" + APP_name + "】已完成计划任务并退出APP！");
-}
-//黑阈临时启动APP
-function start() {
-    home();
-    sleep(500);
-    text("执行指令").findOne().click();
-    id("command").setText("launch-instant " + Package_name);
-    sleep(600);
-    id("exec").findOne().click();
-}
-
-//常规启动APP
-function start0() {
-    launch(getPackageName(APP_name));
-    var sh = new Shell(true);
-    return sh;
-}
-
-//退出APP
-function stop() {
-    launch(getPackageName(APP_name));
-    var sh = new Shell(true);
-    sh.exec("am force-stop " + Package_name);
-    sleep(1000);
-    sh.exit;
-    toastLog("【" + APP_name + "】已完成计划任务并退出APP！");
-}
-
 //黑阈临时启动APP
 function start() {
     home();
@@ -157,10 +106,10 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
     var screenHeight = device.height;
 
     // 计算目标区域的中心点坐标
-    var left = parseInt(match[1]) * screenWidth / 1080; // 1080是假设的标准分辨率
-    var top = parseInt(match[2]) * screenHeight / 2400; // 1920是假设的标准分辨率
-    var right = parseInt(match[3]) * screenWidth / 1080;
-    var bottom = parseInt(match[4]) * screenHeight / 2400;
+    var left = parseInt(match[1]) * screenWidth / 1440; // 1080是假设的标准分辨率
+    var top = parseInt(match[2]) * screenHeight / 3168; // 1920是假设的标准分辨率
+    var right = parseInt(match[3]) * screenWidth / 1440;
+    var bottom = parseInt(match[4]) * screenHeight / 3168;
 
     var centerX = (left + right) / 2;
     var centerY = (top + bottom) / 2;
@@ -215,27 +164,37 @@ function handle() {
     clickNonClickableN("#activityAppGuideTransparentClose",1, 3, 3000);
     clickNonClickableN("#dialogHomeInputCodeCloseIv",1, 3, 3000);
     clickNonClickable("签到红包",3,500);
-     clickNonClickable("赚红包",3,500);
-    sleep(32000);
-    clickNonClickableByBounds("(944,130,1022,208)",3,500);
-    sleep(5000);
-    clickNonClickable("赚红包",3,500);
-    sleep(6500);
-    clickNonClickable("#appPubliconlyTimeImageClose",1,500);
-    sleep(7500);
+    sleep(6600);
     var count = text("+0.1红包").find().size();
     for(i=0;i<count;i++){
         clickNonClickableN("+0.1红包",1,2, 5000);
-        sleep(31000);
-        clickNonClickableByBounds("(978,176,1020,218)",3,500);
+        sleep(36000);
+        clickNonClickableN("关闭按钮",1,3,1000);
+        clickNonClickableByBounds("(1260,240,1380,360)",3,1000);
+        clickNonClickableByBounds("(1275,80,1363,168)",3,1000);  
         sleep(6500);
         if(id("toolbar_buttons").exists()){
             start()
             sleep(4500);
             clickNonClickableN("关闭按钮",1,3,5000);
         }
-        
+        sleep(5800);
     }
+    clickNonClickable("赚红包",3,500);
+    sleep(36000);
+    clickNonClickableN("关闭按钮",1,3,300);
+    clickNonClickableByBounds("(1279,97,1343,161)",3,300);
+    clickNonClickableByBounds("(1259,172,1362,274)",3,300);
+    sleep(6500);
+    if(id("toolbar_buttons").exists()){
+        start()
+        sleep(4500);
+        clickNonClickableN("关闭按钮",1,3,5000);
+    }
+    sleep(5000);
+    clickNonClickable("赚红包",3,500);
+    sleep(6500);
+    clickNonClickable("#appPubliconlyTimeImageClose",1,500);
 
 
 }

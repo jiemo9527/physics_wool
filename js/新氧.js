@@ -162,28 +162,30 @@ function clickNonClickableN(selector, n, maxRetries, retryDelay) {
 function handle() {
     clickNonClickableN("#imgClose", 1, 2, 3500);
     clickNonClickable("我的", 3, 600);
-    clickNonClickable("福利社", 3, 600);
-    sleep(4500);
-    //swipe(600,1000,700,1000,499);
-    sleep(1500);
-    clickNonClickable("#task_center_footer_txv", 3, 600);
-    sleep(500);
-    //滑0.9屏
-    var screenHeight = device.height;
-    swipe(device.width / 2, screenHeight - 200, device.width / 2, 0, 500);
-    sleep(1500);
-    for (i = 0; i < 5; i++) {
-        clickNonClickable("券后", 5, 1500);
-        sleep(4000);
-        back();
-        sleep(500);
-        swipe(device.width / 2, screenHeight - 200, device.width / 2, 0, 500);
-        sleep(1500);
-    }
+    clickNonClickable("#ltv_my_sign", 3, 600);
+    click(720/1440*device.width,2033/3168*device.height);
+    click(720/1440*device.width,2130/3168*device.height);
+    sleep(2500);
+    clickNonClickable("券后", 5, 1500);
+    sleep(5000);
     back();
-    sleep(1500)
-    clickNonClickable("福利社", 3, 600);
-    clickNonClickable("#tv_status", 6, 700);
+    sleep(2500);
+    clickNonClickableN("券后",2, 5, 1500);
+    sleep(5000);
+    back();
+    clickNonClickableN("券后",3, 5, 1500);
+    sleep(5000);
+    back();
+    clickNonClickableN("券后",4, 5, 1500);
+    sleep(5000);
+    back();
+    clickNonClickableN("券后",5, 5, 1500);
+    sleep(5000);
+    back();
+    sleep(99999999994500);
+
+    // clickNonClickable("福利社", 3, 600);
+    // clickNonClickable("#tv_status", 6, 700);
 }
 
 
