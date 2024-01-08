@@ -52,26 +52,27 @@ function clickNonClickable(targetText, maxRetries, retryDelay) {
     toast("达到最大重试次数，点击" + targetText + "失败");
 }
 
-
-function handle() {
-    clickNonClickable("逛", 3, 500);
-    sleep(4300);
-    for (var i = 0; i < random(240, 400); i++) {
+function BrushVideos(a, b) {
+    for (var i = 0; i < random(a, b); i++) {
         // 生成随机坐标和滑动时间
-        var startX = random(800, 1100);
-        var startY = random(2210, 2399);
-        var endX = random(900, 1020);
-        var endY = random(200, 399);
-        var duration = random(420, 720);
+        var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
+        var startY = random(2210 / 3168 * device.height, 2399 / 3168 * device.height);
+        var endX = random(900 / 1440 * device.width, 1020 / 1440 * device.width);
+        var endY = random(200 / 3168 * device.height, 399 / 3168 * device.height);
+        var duration = random(410, 720);
 
         swipe(startX, startY, endX, endY, duration);
         toastLog(APP_name + "计数器：" + (i + 1));
         // 生成2.6到8.7之间的随机数
-        var randomSleep = random(2600, 8700);
-
-        sleep(randomSleep);
+        sleep(random(2600, 8700));
     }
+}
 
+function handle() {
+    sleep(3700);
+    clickNonClickable("逛", 3, 500);
+    sleep(4300);
+    BrushVideos(241, 394);
 }
 
 start1 = start()

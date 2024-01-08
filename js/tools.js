@@ -154,3 +154,19 @@ function clickNonClickableN(selector, n, maxRetries, retryDelay) {
     toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
 }
 
+//刷视频
+function BrushVideos(a,b){
+        for (var i = 0; i < random(a, b); i++) {
+        // 生成随机坐标和滑动时间
+        var startX = random(800/1440*device.width, 1100/1440*device.width);
+        var startY = random(2210/3168*device.height, 2399/3168*device.height);
+        var endX = random(900/1440*device.width, 1020/1440*device.width);
+        var endY = random(200/3168*device.height, 399/3168*device.height);
+        var duration = random(420, 720);
+
+        swipe(startX, startY, endX, endY, duration);
+        toastLog(APP_name + "计数器：" + (i + 1));
+        // 生成2.6到8.7之间的随机数
+        sleep(random(2600, 8700));
+    }
+}

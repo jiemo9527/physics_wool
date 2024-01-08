@@ -9,7 +9,7 @@ function start() {
     sleep(500);
     text("执行指令").findOne().click();
     id("command").setText("launch-instant " + Package_name);
-    sleep(600);
+    sleep(700);
     id("exec").findOne().click();
 }
 
@@ -215,27 +215,28 @@ function handle() {
     clickNonClickableN("#activityAppGuideTransparentClose",1, 3, 3000);
     clickNonClickableN("#dialogHomeInputCodeCloseIv",1, 3, 3000);
     clickNonClickable("签到红包",3,500);
-    // clickNonClickable("赚红包",3,500);
-    // sleep(39000);
-    // clickNonClickableByBounds("(944,130,1022,208)",3,500);
-    // clickNonClickable("赚红包",3,500);
-    // sleep(6500);
-    // clickNonClickable("#appPubliconlyTimeImageClose",1,500);
+     clickNonClickable("赚红包",3,500);
+    sleep(32000);
+    clickNonClickableByBounds("(944,130,1022,208)",3,500);
+    sleep(5000);
+    clickNonClickable("赚红包",3,500);
+    sleep(6500);
+    clickNonClickable("#appPubliconlyTimeImageClose",1,500);
     sleep(7500);
     var count = text("+0.1红包").find().size();
     for(i=0;i<count;i++){
         clickNonClickableN("+0.1红包",1,2, 5000);
-        sleep(38000);
+        sleep(31000);
         clickNonClickableByBounds("(978,176,1020,218)",3,500);
         sleep(6500);
         if(id("toolbar_buttons").exists()){
             start()
+            sleep(4500);
             clickNonClickableN("关闭按钮",1,3,5000);
         }
         
     }
 
-    sleep(999999);
 
 }
 
