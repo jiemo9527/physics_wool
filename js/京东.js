@@ -1,4 +1,4 @@
-//耗时3-15分钟
+//耗时20-33分钟
 APP_name = "京东";
 Package_name = getPackageName(APP_name);
 
