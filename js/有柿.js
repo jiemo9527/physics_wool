@@ -179,7 +179,7 @@ function BrushVideos(a, b) {
 
 function handle() {
     sleep(3700);
-    clickNonClickableN("#cx9", 3, 500);
+    clickNonClickable("视频", 3, 500);
     sleep(4300);
     BrushVideos(241, 286);
 }
