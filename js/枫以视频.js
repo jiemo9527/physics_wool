@@ -1,5 +1,5 @@
 //耗时20-33分钟
-APP_name = "枫以视频";
+APP_name = "闪电搜索";
 Package_name = getPackageName(APP_name);
 
 
@@ -165,22 +165,49 @@ function BrushVideos(a,b){
         // 生成随机坐标和滑动时间
         var startX = random(800/1440*device.width, 1100/1440*device.width);
         var startY = random(2210/3168*device.height, 2399/3168*device.height);
-        var endX = random(900/1440*device.width, 1020/1440*device.width);
-        var endY = random(200/3168*device.height, 399/3168*device.height);
-        var duration = random(420, 720);
+            var endX = random(900 / 1440 * device.width, 1020 / 1440 * device.width);
+            var endY = random(200 / 3168 * device.height, 399 / 3168 * device.height);
+            var duration = random(420, 720);
 
-        swipe(startX, startY, endX, endY, duration);
-        toastLog(APP_name + "计数器：" + (i + 1));
-        // 生成2.6到8.7之间的随机数
-        sleep(random(2600, 8700));
+            swipe(startX, startY, endX, endY, duration);
+            toastLog(APP_name + "计数器：" + (i + 1));
+            // 生成2.6到8.7之间的随机数
+            sleep(random(2600, 8700));
+        }
+}
+
+//刷新闻
+function BrushNews(news, next_item) {
+    for (j = 0; j < news; j++) {
+        for (var i = 0; i < 6; i++) {
+            // 生成随机坐标和滑动时间
+            var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
+            var startY = random(1410 / 3168 * device.height, 1760 / 3168 * device.height);
+            var endX = random(900 / 1440 * device.width, 1020 / 1440 * device.width);
+            var endY = random(1090 / 3168 * device.height, 1240 / 3168 * device.height);
+            var duration = random(420, 720);
+
+            swipe(startX, startY, endX, endY, duration);
+            toastLog(APP_name + "计数器：" + (j + 1));
+            // 生成随机数
+            sleep(random(3660, 4100));
+        }
+        clickNonClickable(next_item, 5, 500);
     }
+
 }
 
 
 function handle() {
-    sleep(3700);
-    clickNonClickable("#tab_welfare_container", 3, 500);
-    //..
+
+    sleep(4700);
+    id("d1m").waitFor();
+    clickNonClickable("#d1m", 3, 500);
+    //clickNonClickable("dian5次的入口", 3, 500);
+    clickNonClickable("#gq", 3, 500);
+    sleep(3500)
+    BrushNews(35, "#e2c");
+    sleep(2500);
 }
 
 start1 = start()

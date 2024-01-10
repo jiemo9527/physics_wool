@@ -198,7 +198,6 @@ function BrushNews(news,next_item) {
 
 
 function handle() {
-
     sleep(4700);
     id("d1m").waitFor();
     clickNonClickable("#d1m", 3, 500);
