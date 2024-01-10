@@ -62,7 +62,45 @@ function clickNonClickable(selector, maxRetries, retryDelay) {
     toast("达到最大重试次数，点击" + selector + "失败");
 }
 
-//点击置顶层text/id
+//点击第n个text/id;可超时
+function clickNonClickableN(selector, n, maxRetries, retryDelay) {
+    var foundCount = 0;
+
+    for (var attempt = 1; attempt <= maxRetries; attempt++) {
+        var targets = selector.startsWith("#") ? id(selector.substring(1)).find() : text(selector).find();
+        if (targets.length > 0) {
+            // 检查是否存在足够的匹配项
+            if (foundCount + targets.length >= n) {
+                // 找到第n个匹配项
+                var targetIndex = n - foundCount - 1;
+                var target = targets[targetIndex];
+
+                // 尝试直接使用click函数点击目标控件
+                if (target.clickable()) {
+                    target.click();
+                    foundCount++;
+                    return;
+                } else {
+                    // 如果clickable属性为false，尝试使用坐标点击
+                    var centerX = target.bounds().centerX();
+                    var centerY = target.bounds().centerY();
+
+                    click(centerX, centerY);
+                    foundCount++;
+                    return;
+                }
+            } else {
+                // 增加已找到的计数
+                foundCount += targets.length;
+            }
+        } else {
+            sleep(retryDelay);
+        }
+    }
+    toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
+}
+
+//点击置顶层*text/id
 function clickToplayer(selector) {
     // 通过元素识别方法获取目标按钮的坐标
     var targetElement = null;
@@ -120,43 +158,6 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
     click(centerX, centerY);
 }
 
-//点击第n个text/id;可超时
-function clickNonClickableN(selector, n, maxRetries, retryDelay) {
-    var foundCount = 0;
-
-    for (var attempt = 1; attempt <= maxRetries; attempt++) {
-        var targets = selector.startsWith("#") ? id(selector.substring(1)).find() : text(selector).find();
-        if (targets.length > 0) {
-            // 检查是否存在足够的匹配项
-            if (foundCount + targets.length >= n) {
-                // 找到第n个匹配项
-                var targetIndex = n - foundCount - 1;
-                var target = targets[targetIndex];
-
-                // 尝试直接使用click函数点击目标控件
-                if (target.clickable()) {
-                    target.click();
-                    foundCount++;
-                    return;
-                } else {
-                    // 如果clickable属性为false，尝试使用坐标点击
-                    var centerX = target.bounds().centerX();
-                    var centerY = target.bounds().centerY();
-
-                    click(centerX, centerY);
-                    foundCount++;
-                    return;
-                }
-            } else {
-                // 增加已找到的计数
-                foundCount += targets.length;
-            }
-        } else {
-            sleep(retryDelay);
-        }
-    }
-    toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
-}
 
 //刷视频
 function BrushVideos(a,b){
@@ -176,9 +177,11 @@ function BrushVideos(a,b){
 }
 
 //刷新闻
-function BrushNews(news,next_item) {
+function BrushNews(news,start_item,next_item) {
     for (j = 0; j < news; j++) {
-        for (var i = 0; i < 6; i++) {
+        sleep(2100);
+        clickNonClickable(start_item, 5, 500);
+        for (var i = 0; i < 5; i++) {
             // 生成随机坐标和滑动时间
             var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
             var startY = random(1410 / 3168 * device.height, 1760 / 3168 * device.height);
@@ -187,10 +190,10 @@ function BrushNews(news,next_item) {
             var duration = random(420, 720);
 
             swipe(startX, startY, endX, endY, duration);
-            toastLog(APP_name + "计数器：" + (j + 1));
             // 生成随机数
-            sleep(random(3660, 4100));
+            sleep(random(3660, 3680));
         }
+        toastLog(APP_name + "计数器：" + (j + 1));
         clickNonClickable(next_item, 5, 500);
     }
 
