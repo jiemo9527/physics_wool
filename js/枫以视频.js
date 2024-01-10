@@ -1,5 +1,5 @@
 //耗时20-33分钟
-APP_name = "闪电搜索";
+APP_name = "枫以视频";
 Package_name = getPackageName(APP_name);
 
 
@@ -201,13 +201,28 @@ function BrushNews(news, next_item) {
 function handle() {
 
     sleep(4700);
-    id("d1m").waitFor();
-    clickNonClickable("#d1m", 3, 500);
-    //clickNonClickable("dian5次的入口", 3, 500);
-    clickNonClickable("#gq", 3, 500);
-    sleep(3500)
-    BrushNews(35, "#e2c");
+    id("tab_welfare_container").waitFor();
+    clickNonClickable("#tab_welfare_container", 3, 500);
+    sleep(3600);
+    swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.2, 468);
     sleep(2500);
+    var Entrance = text("立即领取").find().length;//static
+    while (true) {
+        if (text("立即领取").find().length > 1) {
+            clickNonClickable("立即领取", 3, 500);
+            sleep(6600);
+            clickNonClickableByBounds("(189,610,261,682)", 3, 500);
+            sleep(800);
+            clickNonClickable("7a9e3f82-3d7c-4ba5-befb-f953f14708dd", 3, 500);
+        } else if (text("立即领取").find().length == 1) {
+            clickNonClickable("立即领取", 3, 500);
+            sleep(6600);
+            clickNonClickable("7a9e3f82-3d7c-4ba5-befb-f953f14708dd", 3, 500);
+        } else {
+            break;
+        }
+    }
+    sleep(2000);
 }
 
 start1 = start()
