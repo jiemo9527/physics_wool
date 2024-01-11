@@ -179,8 +179,8 @@ function BrushVideos(a,b){
 function BrushNews(news,start_item,next_item) {
     for (j = 0; j < news; j++) {
         sleep(2100);
-        clickNonClickable(start_item, 5, 500);
-        for (var i = 0; i < 5; i++) {
+        clickNonClickableN(start_item, 1, 5, 500);
+        for (var i = 0; i < 4; i++) {
             // 生成随机坐标和滑动时间
             var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
             var startY = random(1410 / 3168 * device.height, 1760 / 3168 * device.height);
@@ -189,12 +189,12 @@ function BrushNews(news,start_item,next_item) {
             var duration = random(420, 720);
 
             swipe(startX, startY, endX, endY, duration);
-            
+
             // 生成随机数
             sleep(random(3660, 3680));
         }
         toastLog(APP_name + "计数器：" + (j + 1));
-        clickNonClickable(next_item, 5, 500);
+        clickNonClickableN(next_item, 1, 5, 500);
     }
 
 }
@@ -203,9 +203,9 @@ function BrushNews(news,start_item,next_item) {
 function handle() {
     sleep(700);
     id("d1m").waitFor();
-    clickNonClickableN("#d1m", 4,3, 1500);
+    clickNonClickableN("#d1m", 4,5, 1500);
     sleep(4500);
-    clickNonClickableByBounds("(81,1143,528,1420)", 3, 500);
+    clickNonClickableByBounds("(81,1143,528,1420)", 6, 500);
     sleep(4400);
 
     BrushNews(32,"#gq","#e2c");
