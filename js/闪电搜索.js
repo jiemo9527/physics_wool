@@ -205,7 +205,7 @@ function handle() {
     id("d1m").waitFor();
     clickNonClickableN("#d1m", 4,5, 1500);
     sleep(4500);
-    clickNonClickableByBounds("(81,1143,528,1420)", 6, 500);
+    clickNonClickableByBounds("(81,1143,528,1420)", 6, 1000);
     sleep(4400);
 
     BrushNews(32,"#gq","#e2c");
