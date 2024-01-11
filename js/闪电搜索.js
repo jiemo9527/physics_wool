@@ -180,7 +180,12 @@ function BrushNews(news,start_item,next_item) {
     for (j = 0; j < news; j++) {
         sleep(2100);
         clickNonClickableN(start_item, 1, 5, 500);
-        for (var i = 0; i < 4; i++) {
+        if(j<5){
+            delay=4;
+        }else{
+            delay=5;
+        }
+        for (var i = 0; i < delay; i++) {
             // 生成随机坐标和滑动时间
             var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
             var startY = random(1410 / 3168 * device.height, 1760 / 3168 * device.height);
@@ -194,7 +199,8 @@ function BrushNews(news,start_item,next_item) {
             sleep(random(3660, 3680));
         }
         toastLog(APP_name + "计数器：" + (j + 1));
-        clickNonClickableN(next_item, 1, 5, 500);
+        //clickNonClickableN(next_item, 1, 5, 500);
+        back();
     }
 
 }
