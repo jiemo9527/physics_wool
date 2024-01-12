@@ -199,8 +199,7 @@ function BrushNews(news,start_item,next_item) {
             sleep(random(3660, 3680));
         }
         toastLog(APP_name + "计数器：" + (j + 1));
-        //clickNonClickableN(next_item, 1, 5, 500);
-        back();
+        clickNonClickableN(next_item, 1, 5, 500);
     }
 
 }
