@@ -1,4 +1,4 @@
-//耗时20-33分钟
+//耗时30-35分钟
 APP_name = "有柿";
 Package_name = getPackageName(APP_name);
 
@@ -181,7 +181,7 @@ function handle() {
     sleep(3700);
     clickNonClickable("视频", 3, 500);
     sleep(4300);
-    BrushVideos(241, 286);
+    BrushVideos(296, 331);
 }
 
 start1 = start()
