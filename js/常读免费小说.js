@@ -117,7 +117,7 @@ function handle() {
     sleep(2000);
     click(device.width / 2, device.height / 2);
     FloatingCurrentAPP();
-    sleep(3 * 3600 * 1000);
+    sleep(3 * 3660 * 1000);
 
 }
 

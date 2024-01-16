@@ -142,6 +142,7 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
 function handle() {
     sleep(3400);
     clickNthNonClickable("签到赚钱", 3, 1000);
+    sleep(5500);
     clickNthNonClickable("sign_icon", 3, 500);
     clickNthNonClickableN("开心收下", 1, 3, 500);
     sleep(4100);
