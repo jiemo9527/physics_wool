@@ -143,7 +143,7 @@ function handle() {
     sleep(500);
     clickNonClickable("明细", 3, 500);
     clickNonClickable("去使用", 3, 500);
-    sleep(4500);
+    sleep(6600);
     clickNonClickableByBounds("(0,1433,1080,1613)", 3, 500);
     sleep(3800);
     clickNonClickable("返回", 3, 500);
