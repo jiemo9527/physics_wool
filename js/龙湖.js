@@ -1,4 +1,4 @@
-//耗时1分钟内
+//耗时忽略
 APP_name = "龙湖U享家"; 
 Package_name = getPackageName(APP_name); 
  
@@ -7,10 +7,10 @@ Package_name = getPackageName(APP_name);
 function start() {
     home();
     sleep(500);
-    text("执行指令").findOne().click();
+    clickNonClickable("执行指令",5,600);
     id("command").setText("launch-instant " + Package_name);
-    sleep(600);
-    id("exec").findOne().click();
+    sleep(800);
+    clickNonClickable("#exec",5,600);
 }
 
 //常规启动APP
@@ -143,7 +143,7 @@ function handle() {
     sleep(500);
     clickNonClickable("明细", 3, 500);
     clickNonClickable("去使用", 3, 500);
-    sleep(6600);
+    sleep(4500);
     clickNonClickableByBounds("(0,1433,1080,1613)", 3, 500);
     sleep(3800);
     clickNonClickable("返回", 3, 500);

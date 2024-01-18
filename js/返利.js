@@ -7,10 +7,10 @@ Package_name = getPackageName(APP_name);
 function start() {
     home();
     sleep(500);
-    text("执行指令").findOne().click();
+    clickNonClickable("执行指令",5,600);
     id("command").setText("launch-instant " + Package_name);
-    sleep(600);
-    id("exec").findOne().click();
+    sleep(800);
+    clickNonClickable("#exec",5,600);
 }
 
 //常规启动APP
@@ -143,7 +143,7 @@ function handle() {
     sleep(3400);
     clickNthNonClickable("签到赚钱", 3, 1000);
     sleep(5500);
-    clickNthNonClickableN("sign_icon", 1,3, 500);
+    clickNthNonClickableN("sign_icon", 1,3, 1500);
     clickNthNonClickableN("开心收下", 1, 3, 500);
     sleep(4100);
     if(text("去完成").exists()){

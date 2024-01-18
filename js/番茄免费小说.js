@@ -2,9 +2,18 @@
 APP_name = "番茄免费小说";
 Package_name = getPackageName(APP_name);
 
+//黑阈临时启动APP
+function start() {
+    home();
+    sleep(500);
+    clickNonClickable("执行指令",5,600);
+    id("command").setText("launch-instant " + Package_name);
+    sleep(800);
+    clickNonClickable("#exec",5,600);
+}
 
 //常规启动
- function start() {
+ function start0() {
      launch(getPackageName(APP_name));
     var sh = new Shell(true);
      return sh;
@@ -115,6 +124,6 @@ function handle() {
 
 } 
  
-start1 = start() 
+start1 = start0()
 handle() 
 stop()

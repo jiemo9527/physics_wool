@@ -3,14 +3,14 @@ APP_name = "佣金帝";
 Package_name = getPackageName(APP_name);
 
 
-//黑阈临时启动
+//黑阈临时启动APP
 function start() {
     home();
     sleep(500);
-    text("执行指令").findOne().click();
+    clickNonClickable("执行指令",5,600);
     id("command").setText("launch-instant " + Package_name);
-    sleep(600);
-    id("exec").findOne().click();
+    sleep(800);
+    clickNonClickable("#exec",5,600);
 }
 
 //常规启动
