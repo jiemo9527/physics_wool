@@ -1,5 +1,5 @@
 //耗时约3小时
-APP_name = "常读免费小说";
+APP_name = "常读小说";
 Package_name = getPackageName(APP_name);
 
 
