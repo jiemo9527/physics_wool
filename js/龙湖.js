@@ -224,7 +224,7 @@ function handle() {
     clickNonClickableByBounds("(0,1610,1080,1769)", 3, 500);   //S2
     clickNonClickable("获取更多抽奖机会", 3, 500);
     sleep(1000);
-    clickNthNonClickableN("签 到", 1,2, 500);//clickNonClickable("签 到", 3, 500);
+    clickNonClickableN("签 到", 1,2, 500);//clickNonClickable("签 到", 3, 500);
     sleep(1000);
     clickNonClickable("返回", 3, 500);
     sleep(2900);
