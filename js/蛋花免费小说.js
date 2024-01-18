@@ -97,6 +97,15 @@ function clickNonClickableN(selector, n, maxRetries, retryDelay) {
     }
     toast("达到最大重试次数，未找到第 " + n + " 个匹配项：" + selector);
 }
+//浮窗当前APP
+function FloatingCurrentAPP() {
+    sleep(500);
+    // 打开多任务视图
+    recents();
+    desc("更多").findOne().click();
+    sleep(150);
+    click("浮窗");
+}
 
 
 function handle() {
@@ -117,7 +126,7 @@ function handle() {
     id("d3u").findOne().click();
     sleep(500);
     click(device.width / 2, device.height / 2);
-    //FloatingCurrentAPP();
+    FloatingCurrentAPP();
     sleep(3 * 3660 * 1000);
 
 
