@@ -110,9 +110,10 @@ function FloatingCurrentAPP() {
 
 
 function handle() {
-    sleep(3800);
+    id("a2g").waitFor();
+    sleep(1800);
     clickNonClickableN("#dco", 2, 5, 400);//#dfv
-    sleep(2500);
+    sleep(2200);
     home();
     sleep(3 * 3660 * 1000);
 
