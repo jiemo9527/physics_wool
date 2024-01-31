@@ -7,10 +7,10 @@ Package_name = getPackageName(APP_name);
 function start() {
     home();
     sleep(500);
-    clickNonClickable("执行指令",5,600);
+    clickNonClickable("执行指令", 5, 600);
     id("command").setText("launch-instant " + Package_name);
     sleep(800);
-    clickNonClickable("#exec",5,600);
+    clickNonClickable("#exec", 5, 600);
 }
 
 //常规启动APP
@@ -19,6 +19,7 @@ function start0() {
     var sh = new Shell(true);
     return sh;
 }
+
 function stop() {
     var sh = new Shell(true);
     sh.exec("am force-stop " + Package_name);
@@ -109,11 +110,11 @@ function FloatingCurrentAPP() {
 
 
 function handle() {
-    id("a2g").waitFor();//a2b
-    clickNonClickableN("#dgn",1,5,1000);//#dfv
+    sleep(3800);
+    clickNonClickableN("#dco", 2, 5, 400);//#dfv
     sleep(2500);
     home();
-    sleep(3 * 3660* 1000);
+    sleep(3 * 3660 * 1000);
 
 }
 
