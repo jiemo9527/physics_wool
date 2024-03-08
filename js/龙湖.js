@@ -222,16 +222,18 @@ function handle() {
     clickNonClickable("返回", 3, 500);
     sleep(4500);
     clickNonClickableByBounds("(0,1610,1080,1769)", 3, 500);   //S2
-    clickNonClickable("获取更多抽奖机会", 3, 500);
-    sleep(1000);
-    clickNonClickableN("签 到", 1,2, 500);//clickNonClickable("签 到", 3, 500);
-    sleep(1000);
+    // clickNonClickable("获取更多抽奖机会", 3, 500);
+    sleep(3000);
+    // clickNonClickableN("签 到", 1,2, 500);//clickNonClickable("签 到", 3, 500);
+    click(530/1080*device.width,990/2400*device.height);
+    sleep(3600);
+    //gkd穿透
     clickNonClickable("返回", 3, 500);
     sleep(2900);
     clickNonClickableByBounds("(0,1610,1080,1769)", 3, 500); //S2
     sleep(3000);
     //马上抽奖
-    click(500/1080*device.width,1795/2400*device.height);
+    click(530/1080*device.width,990/2400*device.height);
     sleep(6500);
 
 } 
