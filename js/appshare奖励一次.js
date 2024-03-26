@@ -1,4 +1,4 @@
-//耗时
+//耗时忽略
 APP_name = "AppShare";
 Package_name = getPackageName(APP_name);
 
@@ -216,10 +216,10 @@ function handle(){
     clickNonClickable("#btBottom",2,600); 
     sleep(65*1000);
     clickNonClickableByBounds("(941,165,1034,246)",3,500);
-    sleep(1000);
+    sleep(5000);
 }
 
-start0()
+start()
 handle()
 stop()
 
