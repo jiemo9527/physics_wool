@@ -180,7 +180,10 @@ function BrushVideos(a, b) {
 function handle() {
     text("继续观看").waitFor();
     clickNonClickable("继续观看", 5, 600);
-    sleep(3 * 3660 * 1000);
+    for (i = 0; i < 37; i++) {
+        sleep(5 * 60 * 1000);
+        BrushVideos(1, 1);
+    }
 }
 
 start1 = start()
