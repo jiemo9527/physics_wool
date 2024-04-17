@@ -1,5 +1,5 @@
 //耗时约3小时
-APP_name = "常读小说";
+APP_name = "常读免费小说";
 Package_name = getPackageName(APP_name);
 
 
@@ -111,10 +111,10 @@ function FloatingCurrentAPP() {
 
 function handle() {
     sleep(4100);
-    if (id("c09").exists()) {
+    if (id("iv_book").exists()) {
         className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
     } else {
-        id("xg").waitFor();
+        id("y3").waitFor();
         sleep(100);
         if (text("继续听").exists()) {
             clickNonClickable("继续听", 2, 500);
@@ -123,8 +123,8 @@ function handle() {
             className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
         }
     }
-    id("d36").findOne().click();
-    sleep(2000);
+    id("dct").findOne().click();
+    sleep(5000);
     click(device.width / 2, device.height / 2);
     FloatingCurrentAPP();
     sleep(3 * 3660 * 1000);

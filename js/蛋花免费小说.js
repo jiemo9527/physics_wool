@@ -110,10 +110,10 @@ function FloatingCurrentAPP() {
 
 function handle() {
     sleep(3800);
-    if (id("c0p").exists()) {
+    if (id("cbl").exists()) {
         className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
     } else {
-        id("xl").waitFor();
+        id("aeh").waitFor();
         sleep(100);
         if (text("继续听").exists()) {
             clickNonClickable("继续听", 2, 500);
@@ -123,8 +123,8 @@ function handle() {
 
         }
     }
-    id("d3u").findOne().click();
-    sleep(500);
+    id("d0e").findOne().click();
+    sleep(5000);
     click(device.width / 2, device.height / 2);
     FloatingCurrentAPP();
     sleep(3 * 3660 * 1000);
