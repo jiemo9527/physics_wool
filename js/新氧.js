@@ -8,7 +8,7 @@ function start() {
     sleep(500);
     clickNonClickable("执行指令",5,600);
     id("command").setText("launch-instant " + Package_name);
-    sleep(800);
+    sleep(400);
     clickNonClickable("#exec",5,600);
 }
 //常规启动APP
@@ -208,10 +208,12 @@ function FloatingCurrentAPP() {
     click("浮窗");
 }
 function handle(){
-	// clickNonClickableByBounds("(864,2094,1080,2268)",3,800);
     clickNonClickableN("我的", 1,8, 600);
-    clickNonClickable("#ltv_my_sign", 4, 600);
-    sleep(3200);
+    clickNonClickable("#iv_my_sign", 4, 600);
+    sleep(2600);
+    clickNonClickable("#btnSignGet", 4, 600);
+    sleep(1500);
+
 }
 
 start()
