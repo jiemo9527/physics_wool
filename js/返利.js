@@ -1,16 +1,16 @@
 //耗时6分钟
-APP_name = "返利"; 
-Package_name = getPackageName(APP_name); 
- 
- 
+APP_name = "返利";
+Package_name = getPackageName(APP_name);
+
+
 //黑阈临时启动APP
 function start() {
     home();
     sleep(500);
-    clickNonClickable("执行指令",5,600);
+    clickNonClickable("执行指令", 5, 600);
     id("command").setText("launch-instant " + Package_name);
-    sleep(800);
-    clickNonClickable("#exec",5,600);
+    sleep(400);
+    clickNonClickable("#exec", 5, 600);
 }
 
 //常规启动APP
@@ -178,7 +178,8 @@ function BrushVideos(a, b) {
 
 
 function handle() {
-    sleep(5400);
+    sleep(6600);
+    clickNonClickable("我的", 3, 1000);
     clickNonClickable("签到赚钱", 3, 1000);
     sleep(5500);
     clickNonClickableN("sign_icon", 1, 3, 1500);
@@ -186,7 +187,7 @@ function handle() {
     sleep(4100);
     if (text("去完成").exists()) {
         clickNonClickableN("去完成", 1, 2, 1000);
-        sleep(11000);
+        sleep(17000);
         back();
 
     }
