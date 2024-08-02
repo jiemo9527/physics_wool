@@ -164,9 +164,9 @@ function BrushVideos(a, b) {
     for (var i = 0; i < random(a, b); i++) {
         // 生成随机坐标和滑动时间
         var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
-        var startY = random(2210 / 3168 * device.height, 2399 / 3168 * device.height);
+        var startY = random(2300 / 3168 * device.height, 2500 / 3168 * device.height);
         var endX = random(900 / 1440 * device.width, 1020 / 1440 * device.width);
-        var endY = random(200 / 3168 * device.height, 399 / 3168 * device.height);
+        var endY = random(200 / 3168 * device.height, 350 / 3168 * device.height);
         var duration = random(420, 720);
 
         swipe(startX, startY, endX, endY, duration);
