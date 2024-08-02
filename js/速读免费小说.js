@@ -141,16 +141,14 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
 
 function handle() {
     sleep(2500);
-    if (desc("bookstore_button").exists()) {
-        clickNonClickable("继续阅读", 2, 500);
-        sleep(800);
-        Tap(600, 1200);
-        // clickNonClickableByBounds("(0,0,1440,3168)", 2, 500);
-        clickNonClickable("听书", 2, 500);
-        clickNonClickableN("边听边读", 1, 2, 500);
-        sleep(1500);
-        FloatingCurrentAPP();
-    }
+    id("read_continue_tv").waitFor();
+    clickNonClickable("#read_continue_tv", 2, 500);
+    // sleep(800);
+    // Tap(600, 1200);
+    // clickNonClickable("听书", 2, 500);
+    clickNonClickableN("边听边读", 1, 2, 500);
+    sleep(1500);
+    FloatingCurrentAPP();
     sleep(3 * 3660 * 1000);
 
 }
