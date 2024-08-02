@@ -170,7 +170,7 @@ function BrushVideos(a, b) {
         var duration = random(420, 720);
 
         swipe(startX, startY, endX, endY, duration);
-        toastLog(APP_name + "计数器：" + (i + 1));
+        //toastLog(APP_name + "计数器：" + (i + 1));
         // 生成2.6到8.7之间的随机数
         sleep(random(2600, 8700));
     }
@@ -183,6 +183,7 @@ function handle() {
     for (i = 0; i < 37; i++) {
         sleep(5 * 60 * 1000);
         BrushVideos(1, 1);
+        toastLog(APP_name + "计数器：" + (i + 1));
     }
 }
 
