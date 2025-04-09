@@ -1,6 +1,7 @@
-//耗时20分钟
-APP_name = "快手极速版";
+//耗时0
+APP_name = "番茄畅听";
 Package_name = getPackageName(APP_name);
+
 
 //黑阈临时启动APP
 function start() {
@@ -161,35 +162,36 @@ function clickNonClickableN(selector, n, maxRetries, retryDelay) {
 }
 
 //刷视频
-function BrushVideos(a,b){
-        for (var i = 0; i < random(a, b); i++) {
+function BrushVideos(a, b) {
+    for (var i = 0; i < random(a, b); i++) {
         // 生成随机坐标和滑动时间
-        var startX = random(800/1440*device.width, 1100/1440*device.width);
-        var startY = random(2210/3168*device.height, 2399/3168*device.height);
-        var endX = random(900/1440*device.width, 1020/1440*device.width);
-        var endY = random(200/3168*device.height, 399/3168*device.height);
+        var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
+        var startY = random(2300 / 3168 * device.height, 2500 / 3168 * device.height);
+        var endX = random(900 / 1440 * device.width, 1020 / 1440 * device.width);
+        var endY = random(200 / 3168 * device.height, 350 / 3168 * device.height);
         var duration = random(420, 720);
 
         swipe(startX, startY, endX, endY, duration);
-        toastLog(APP_name + "计数器：" + (i + 1));
+        //toastLog(APP_name + "计数器：" + (i + 1));
         // 生成2.6到8.7之间的随机数
         sleep(random(2600, 8700));
     }
 }
 
 
-
-
-
 function handle() {
-    clickNonClickable("首页", 3, 500);
-    sleep(3900);
-    BrushVideos(241, 369);
+    sleep(3600);
+    clickNonClickable("#pm", 5, 600);
+    sleep(1600);
+    home();
+    sleep(3*3600* 1000);
+
 }
 
 start1 = start()
 handle()
 stop()
+
 
 
 

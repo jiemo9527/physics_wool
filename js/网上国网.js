@@ -6,12 +6,13 @@ Package_name = getPackageName(APP_name);
 function start() {
     home();
     sleep(500);
-    clickNonClickable("执行指令", 5, 600);
+    home();
+    sleep(500);
+    text("执行指令").findOne().click();
     id("command").setText("launch-instant " + Package_name);
-    sleep(800);
-    clickNonClickable("#exec", 5, 600);
+    sleep(600);
+    id("exec").findOne().click();
 }
-
 //常规启动APP
 function start0() {
     launch(getPackageName(APP_name));
@@ -160,24 +161,24 @@ function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
 
 
 //刷视频
-function BrushVideos(a, b) {
-    for (var i = 0; i < random(a, b); i++) {
+function BrushVideos(a,b){
+        for (var i = 0; i < random(a, b); i++) {
         // 生成随机坐标和滑动时间
-        var startX = random(800 / 1440 * device.width, 1100 / 1440 * device.width);
-        var startY = random(2210 / 3168 * device.height, 2399 / 3168 * device.height);
-        var endX = random(900 / 1440 * device.width, 1020 / 1440 * device.width);
-        var endY = random(200 / 3168 * device.height, 399 / 3168 * device.height);
-        var duration = random(420, 720);
+        var startX = random(800/1440*device.width, 1100/1440*device.width);
+        var startY = random(2210/3168*device.height, 2399/3168*device.height);
+            var endX = random(900 / 1440 * device.width, 1020 / 1440 * device.width);
+            var endY = random(200 / 3168 * device.height, 399 / 3168 * device.height);
+            var duration = random(420, 720);
 
-        swipe(startX, startY, endX, endY, duration);
-        toastLog(APP_name + "计数器：" + (i + 1));
-        // 生成2.6到8.7之间的随机数
-        sleep(random(2600, 8700));
-    }
+            swipe(startX, startY, endX, endY, duration);
+            toastLog(APP_name + "计数器：" + (i + 1));
+            // 生成2.6到8.7之间的随机数
+            sleep(random(2600, 8700));
+        }
 }
 
 //刷新闻
-function BrushNews(news, start_item, next_item) {
+function BrushNews(news,start_item,next_item) {
     for (j = 0; j < news; j++) {
         sleep(2100);
         clickNonClickable(start_item, 5, 500);
@@ -208,10 +209,9 @@ function FloatingCurrentAPP() {
     sleep(150);
     click("浮窗");
 }
-
-function handle() {
-    clickNonClickable("签到", 3, 1000);
-    sleep(3300);
+function handle(){
+    clickNonClickable("签到",3,1000);
+    sleep(5500);
 }
 
 start()

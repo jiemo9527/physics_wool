@@ -7,10 +7,12 @@ Package_name = getPackageName(APP_name);
 function start() {
     home();
     sleep(500);
-    clickNonClickable("执行指令", 5, 600);
+    home();
+    sleep(500);
+    text("执行指令").findOne().click();
     id("command").setText("launch-instant " + Package_name);
-    sleep(800);
-    clickNonClickable("#exec", 5, 600);
+    sleep(600);
+    id("exec").findOne().click();
 }
 
 //常规启动APP
@@ -180,8 +182,8 @@ function BrushVideos(a, b) {
 function handle() {
     text("继续观看").waitFor();
     clickNonClickable("继续观看", 5, 600);
-    for (i = 0; i < 37; i++) {
-        sleep(5 * 60 * 1000);
+    for (i = 0; i < 180; i++) {
+        sleep(65* 1000);
         BrushVideos(1, 1);
         toastLog(APP_name + "计数器：" + (i + 1));
     }
