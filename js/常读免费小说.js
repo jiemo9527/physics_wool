@@ -62,7 +62,35 @@ function clickNonClickable(selector, maxRetries, retryDelay) {
     }
     toast("达到最大重试次数，点击" + selector + "失败");
 }
+function clickNonClickableByBounds(boundsString, maxRetries, retryDelay) {
+    // 解析传入的bounds字符串
+    var regex = /\((\d+),(\d+),(\d+),(\d+)\)/;
+    var match = boundsString.match(regex);
 
+    if (!match) {
+        console.error("传入的bounds格式不正确");
+        return;
+    }
+
+    // 获取设备宽度和高度
+    var screenWidth = device.width;
+    var screenHeight = device.height;
+
+    // 计算目标区域的中心点坐标
+    var left = parseInt(match[1]) * screenWidth / 1080; // 1080是假设的标准分辨率
+    var top = parseInt(match[2]) * screenHeight / 2400; // 1920是假设的标准分辨率
+    var right = parseInt(match[3]) * screenWidth / 1080;
+    var bottom = parseInt(match[4]) * screenHeight / 2400;
+
+    var centerX = (left + right) / 2;
+    var centerY = (top + bottom) / 2;
+
+    // 输出调试信息
+    // console.log("目标区域中心点坐标：" + centerX + ", " + centerY);
+
+    // 使用click函数点击目标区域的中心点
+    click(centerX, centerY);
+}
 //点击第n个text/id;可超时
 function clickNonClickableN(selector, n, maxRetries, retryDelay) {
     var foundCount = 0;
@@ -113,23 +141,15 @@ function FloatingCurrentAPP() {
     Tap(795,285);
     sleep(150);
     click("浮窗");
+    sleep(550);
 }
 
 
 function handle() {
     sleep(4100);
-    if(className("android.widget.FrameLayout").clickable(true).depth(10).exists()){        className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
-    } else {
-        id("y3").waitFor();
-        sleep(100);
-        if (text("继续听").exists()) {
-            clickNonClickable("继续听", 2, 500);
-        } else {
-            clickNonClickable("继续阅读", 2, 500);
-            className("android.widget.FrameLayout").clickable(true).depth(10).findOne().click()
-        }
-    }
-    id("dct").findOne().click();
+    id("aok").waitFor();
+    clickNonClickableByBounds("(282,664,618,783)", 3, 330);
+    clickNonClickable("#na", 5, 600);
     sleep(2500);
     click(device.width / 2, device.height / 2);
     FloatingCurrentAPP();
