@@ -211,7 +211,7 @@ function FloatingCurrentAPP() {
 }
 function handle(){
     clickNonClickable("签到",3,1000);
-    sleep(5500);
+    sleep(9500);
 }
 
 start()

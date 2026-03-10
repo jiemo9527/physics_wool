@@ -149,7 +149,7 @@ function handle() {
     sleep(4100);
     id("aoe").waitFor();
     clickNonClickableByBounds("(282,664,618,783)", 3, 330);
-    clickNonClickable("#n_", 5, 600);
+    clickNonClickable("#e7o", 5, 600);
     sleep(2500);
     click(device.width / 2, device.height / 2);
     FloatingCurrentAPP();
