@@ -13,9 +13,6 @@ importClass(javax.net.ssl.SSLContext);
 importClass(javax.net.ssl.SSLSession);
 importClass(javax.net.ssl.X509TrustManager);
 
-var LOGIN_URL = "https:///Action/login";
-var CALL_URL = "https:///Action/call";
-
 var unsafeSocketFactory = buildUnsafeSocketFactory();
 var unsafeHostnameVerifier = new JavaAdapter(HostnameVerifier, {
     verify: function(hostname, session) {
@@ -32,7 +29,10 @@ ui.layout(
                 text="逻辑和原始 Python 一致：先登录拿 Cookie，等待 1.6 秒，再执行 wakeup。当前版本同样跳过 HTTPS 证书校验。"
                 textSize="14sp" />
 
-            <text text="username" marginTop="18" />
+            <text text="server" marginTop="18" />
+            <input id="serverUrl" singleLine="true" />
+
+            <text text="username" marginTop="12" />
             <input id="username" singleLine="true" />
 
             <text text="passwd" marginTop="12" />
@@ -61,18 +61,20 @@ ui.layout(
     </scroll>
 );
 
+ui.serverUrl.setText("https://abc.com");
 ui.username.setText("1234");
 ui.passwd.setText("1234");
 ui.passToken.setText("1234");
 ui.deviceId.setText("2");
 
 ui.btnWakeup.on("click", function() {
+    var serverUrl = ui.serverUrl.getText().toString().trim();
     var username = ui.username.getText().toString().trim();
     var passwd = ui.passwd.getText().toString().trim();
     var passToken = ui.passToken.getText().toString().trim();
     var deviceIdText = ui.deviceId.getText().toString().trim();
 
-    if (!username || !passwd || !passToken || !deviceIdText) {
+    if (!serverUrl || !username || !passwd || !passToken || !deviceIdText) {
         toast("请先把参数填完整");
         return;
     }
@@ -88,7 +90,7 @@ ui.btnWakeup.on("click", function() {
     threads.start(function() {
         var message;
         try {
-            message = performWakeup(username, passwd, passToken, deviceId);
+            message = performWakeup(serverUrl, username, passwd, passToken, deviceId);
         } catch (e) {
             message = "执行异常\n" + e;
         }
@@ -107,7 +109,10 @@ function setLoading(loading, message) {
     }
 }
 
-function performWakeup(username, passwd, passToken, deviceId) {
+function performWakeup(serverUrl, username, passwd, passToken, deviceId) {
+    var normalizedServerUrl = normalizeServerUrl(serverUrl);
+    var loginUrl = normalizedServerUrl + "/Action/login";
+    var callUrl = normalizedServerUrl + "/Action/call";
     var loginBody = JSON.stringify({
         username: username,
         passwd: passwd,
@@ -115,7 +120,7 @@ function performWakeup(username, passwd, passToken, deviceId) {
         remember_password: ""
     });
 
-    var loginResponse = postJson(LOGIN_URL, loginBody, null);
+    var loginResponse = postJson(loginUrl, loginBody, null);
     if (loginResponse.code < 200 || loginResponse.code >= 300) {
         return "登录失败\nHTTP " + loginResponse.code + "\n" + loginResponse.body;
     }
@@ -134,12 +139,16 @@ function performWakeup(username, passwd, passToken, deviceId) {
         }
     });
 
-    var wakeupResponse = postJson(CALL_URL, wakeupBody, loginResponse.cookie);
+    var wakeupResponse = postJson(callUrl, wakeupBody, loginResponse.cookie);
     if (wakeupResponse.code >= 200 && wakeupResponse.code < 300) {
         return "唤醒请求已发送\nHTTP " + wakeupResponse.code + "\n" + wakeupResponse.body;
     }
 
     return "唤醒失败\nHTTP " + wakeupResponse.code + "\n" + wakeupResponse.body;
+}
+
+function normalizeServerUrl(serverUrl) {
+    return String(serverUrl).replace(/\/+$/, "");
 }
 
 function postJson(url, jsonBody, cookieHeader) {
