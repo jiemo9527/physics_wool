@@ -10,6 +10,8 @@ importClass(java.security.cert.X509Certificate);
 importClass(javax.net.ssl.HostnameVerifier);
 importClass(javax.net.ssl.HttpsURLConnection);
 importClass(javax.net.ssl.SSLContext);
+importClass(javax.net.ssl.SSLSocket);
+importClass(javax.net.ssl.SSLSocketFactory);
 importClass(javax.net.ssl.SSLSession);
 importClass(javax.net.ssl.X509TrustManager);
 
@@ -19,6 +21,9 @@ var unsafeHostnameVerifier = new JavaAdapter(HostnameVerifier, {
         return true;
     }
 });
+var formStorage = storages.create("WakeupByIKuai");
+
+installUnsafeHttpsDefaults();
 
 ui.layout(
     <scroll>
@@ -61,11 +66,7 @@ ui.layout(
     </scroll>
 );
 
-ui.serverUrl.setText("https://abc.com");
-ui.username.setText("1234");
-ui.passwd.setText("1234");
-ui.passToken.setText("1234");
-ui.deviceId.setText("2");
+loadSavedForm();
 
 ui.btnWakeup.on("click", function() {
     var serverUrl = ui.serverUrl.getText().toString().trim();
@@ -73,6 +74,8 @@ ui.btnWakeup.on("click", function() {
     var passwd = ui.passwd.getText().toString().trim();
     var passToken = ui.passToken.getText().toString().trim();
     var deviceIdText = ui.deviceId.getText().toString().trim();
+
+    saveForm(serverUrl, username, passwd, passToken, deviceIdText);
 
     if (!serverUrl || !username || !passwd || !passToken || !deviceIdText) {
         toast("请先把参数填完整");
@@ -107,6 +110,30 @@ function setLoading(loading, message) {
     if (message !== undefined) {
         ui.result.setText(String(message));
     }
+}
+
+function loadSavedForm() {
+    ui.serverUrl.setText(getSavedValue("serverUrl", "https://abc.com"));
+    ui.username.setText(getSavedValue("username", "1234"));
+    ui.passwd.setText(getSavedValue("passwd", "1234"));
+    ui.passToken.setText(getSavedValue("passToken", "1234"));
+    ui.deviceId.setText(getSavedValue("deviceId", "2"));
+}
+
+function getSavedValue(key, defaultValue) {
+    var value = formStorage.get(key);
+    if (value === null || value === undefined || value === "") {
+        return defaultValue;
+    }
+    return String(value);
+}
+
+function saveForm(serverUrl, username, passwd, passToken, deviceIdText) {
+    formStorage.put("serverUrl", serverUrl);
+    formStorage.put("username", username);
+    formStorage.put("passwd", passwd);
+    formStorage.put("passToken", passToken);
+    formStorage.put("deviceId", deviceIdText);
 }
 
 function performWakeup(serverUrl, username, passwd, passToken, deviceId) {
@@ -212,7 +239,59 @@ function buildUnsafeSocketFactory() {
 
     var sslContext = SSLContext.getInstance("TLS");
     sslContext.init(null, trustManagers, new SecureRandom());
-    return sslContext.getSocketFactory();
+    return wrapSocketFactory(sslContext.getSocketFactory());
+}
+
+function installUnsafeHttpsDefaults() {
+    HttpsURLConnection.setDefaultSSLSocketFactory(unsafeSocketFactory);
+    HttpsURLConnection.setDefaultHostnameVerifier(unsafeHostnameVerifier);
+}
+
+function wrapSocketFactory(baseFactory) {
+    return new JavaAdapter(SSLSocketFactory, {
+        getDefaultCipherSuites: function() {
+            return baseFactory.getDefaultCipherSuites();
+        },
+        getSupportedCipherSuites: function() {
+            return baseFactory.getSupportedCipherSuites();
+        },
+        createSocket: function() {
+            var socket = createSocketWithArgs(baseFactory, arguments);
+            enableAllTlsProtocols(socket);
+            return socket;
+        }
+    });
+}
+
+function createSocketWithArgs(factory, argsLike) {
+    var args = [];
+    var i;
+
+    for (i = 0; i < argsLike.length; i++) {
+        args.push(argsLike[i]);
+    }
+
+    switch (args.length) {
+        case 0:
+            return factory.createSocket();
+        case 2:
+            return factory.createSocket(args[0], args[1]);
+        case 4:
+            return factory.createSocket(args[0], args[1], args[2], args[3]);
+        default:
+            throw new Error("不支持的 SSL Socket 参数个数: " + args.length);
+    }
+}
+
+function enableAllTlsProtocols(socket) {
+    if (!(socket instanceof SSLSocket)) {
+        return;
+    }
+
+    try {
+        // 某些设备默认没有把可用 TLS 版本全部打开，这里直接启用服务端和客户端都支持的协议。
+        socket.setEnabledProtocols(socket.getSupportedProtocols());
+    } catch (e) {}
 }
 
 function extractCookieHeader(connection) {
