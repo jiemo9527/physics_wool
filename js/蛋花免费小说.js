@@ -1,7 +1,6 @@
-//耗时约3小时
+//耗时约1小时
 APP_name = "蛋花免费小说";
 Package_name = getPackageName(APP_name);
-
 
 
 //黑阈临时启动APP
@@ -138,22 +137,25 @@ function FloatingCurrentAPP() {
     // 打开多任务视图
     recents();
     sleep(600);
-    //desc("更多").findOne().click();///coloros15不适用
-    Tap(795,285);
+    desc("更多").findOne().click();
     sleep(150);
     click("浮窗");
     sleep(550);
+    home();
+    home();
+    home();
 }
+
 
 function handle() {
     sleep(4100);
-    id("aoe").waitFor();
+    id("aog").waitFor();
     clickNonClickableByBounds("(282,664,618,783)", 3, 330);
-    clickNonClickable("#e7o", 5, 600);
+    clickNonClickable("#e8u", 5, 600);
     sleep(2500);
     click(device.width / 2, device.height / 2);
     FloatingCurrentAPP();
-    sleep(3 * 3660 * 1000);
+    sleep(1 * 3620 * 1000);
 
 }
 
