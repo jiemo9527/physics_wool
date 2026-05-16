@@ -140,7 +140,7 @@ function FloatingCurrentAPP() {
     desc("更多").findOne().click();
     sleep(150);
     click("浮窗");
-    sleep(550);
+    sleep(4500);
     home();
     home();
     home();

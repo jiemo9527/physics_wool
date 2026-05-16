@@ -101,9 +101,14 @@ function FloatingCurrentAPP() {
     sleep(500);
     // 打开多任务视图
     recents();
+    sleep(600);
     desc("更多").findOne().click();
     sleep(150);
     click("浮窗");
+    sleep(4500);
+    home();
+    home();
+    home();
 }
 
 

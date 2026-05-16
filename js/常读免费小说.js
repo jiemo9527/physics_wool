@@ -137,13 +137,14 @@ function FloatingCurrentAPP() {
     // 打开多任务视图
     recents();
     sleep(600);
-    //desc("更多").findOne().click();///coloros15不适用
-    Tap(795,285);
+    desc("更多").findOne().click();
     sleep(150);
     click("浮窗");
-    sleep(550);
+    sleep(4500);
+    home();
+    home();
+    home();
 }
-
 
 function handle() {
     sleep(4100);
