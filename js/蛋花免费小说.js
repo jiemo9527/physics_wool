@@ -149,14 +149,20 @@ function FloatingCurrentAPP() {
 
 function handle() {
     sleep(4100);
-    id("aog").waitFor();
+    id("aq_").waitFor();
     clickNonClickableByBounds("(282,664,618,783)", 3, 330);
-    clickNonClickable("#e8u", 5, 600);
+
+    if (id("efg").findOne(1600)) {
+        clickNonClickable("#efg", 5, 600);
+    } else {
+        click(device.width / 2 , device.height / 2 +190);
+        clickNonClickable("#efg", 5, 600);
+    }
+
     sleep(2500);
     click(device.width / 2, device.height / 2);
     FloatingCurrentAPP();
     sleep(1 * 3620 * 1000);
-
 }
 
 start1 = start()
