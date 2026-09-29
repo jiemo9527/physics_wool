@@ -1,0 +1,350 @@
+"ui";
+
+importClass(java.io.BufferedReader);
+importClass(java.io.BufferedWriter);
+importClass(java.io.InputStreamReader);
+importClass(java.io.OutputStreamWriter);
+importClass(java.net.URL);
+importClass(java.security.SecureRandom);
+importClass(java.security.cert.X509Certificate);
+importClass(javax.net.ssl.HostnameVerifier);
+importClass(javax.net.ssl.HttpsURLConnection);
+importClass(javax.net.ssl.SSLContext);
+importClass(javax.net.ssl.SSLSocket);
+importClass(javax.net.ssl.SSLSocketFactory);
+importClass(javax.net.ssl.SSLSession);
+importClass(javax.net.ssl.X509TrustManager);
+
+var unsafeSocketFactory = buildUnsafeSocketFactory();
+var unsafeHostnameVerifier = new JavaAdapter(HostnameVerifier, {
+    verify: function(hostname, session) {
+        return true;
+    }
+});
+var formStorage = storages.create("WakeupByIKuai");
+
+installUnsafeHttpsDefaults();
+
+ui.layout(
+    <scroll>
+        <vertical padding="16">
+            <text text="接口唤醒工具" textSize="22sp" textStyle="bold" />
+            <text
+                marginTop="8"
+                text="逻辑和原始 Python 一致：先登录拿 Cookie，等待 1.6 秒，再执行 wakeup。当前版本同样跳过 HTTPS 证书校验。"
+                textSize="14sp" />
+
+            <text text="server" marginTop="18" />
+            <input id="serverUrl" singleLine="true" />
+
+            <text text="username" marginTop="12" />
+            <input id="username" singleLine="true" />
+
+            <text text="passwd" marginTop="12" />
+            <input id="passwd" singleLine="true" />
+
+            <text text="pass" marginTop="12" />
+            <input id="passToken" singleLine="true" />
+
+            <text text="device id" marginTop="12" />
+            <input id="deviceId" inputType="number" singleLine="true" />
+
+            <text
+                id="btnWakeup"
+                marginTop="18"
+                padding="12"
+                bg="#2563EB"
+                textColor="#FFFFFF"
+                gravity="center"
+                clickable="true"
+                focusable="true"
+                text="执行唤醒" />
+
+            <text text="结果" marginTop="18" textStyle="bold" />
+            <text id="result" text="等待执行" textIsSelectable="true" marginTop="8" />
+        </vertical>
+    </scroll>
+);
+
+loadSavedForm();
+
+ui.btnWakeup.on("click", function() {
+    var serverUrl = ui.serverUrl.getText().toString().trim();
+    var username = ui.username.getText().toString().trim();
+    var passwd = ui.passwd.getText().toString().trim();
+    var passToken = ui.passToken.getText().toString().trim();
+    var deviceIdText = ui.deviceId.getText().toString().trim();
+
+    saveForm(serverUrl, username, passwd, passToken, deviceIdText);
+
+    if (!serverUrl || !username || !passwd || !passToken || !deviceIdText) {
+        toast("请先把参数填完整");
+        return;
+    }
+
+    var deviceId = parseInt(deviceIdText, 10);
+    if (isNaN(deviceId)) {
+        toast("设备 ID 必须是数字");
+        return;
+    }
+
+    setLoading(true, "正在登录并发送唤醒请求...");
+
+    threads.start(function() {
+        var message;
+        try {
+            message = performWakeup(serverUrl, username, passwd, passToken, deviceId);
+        } catch (e) {
+            message = "执行异常\n" + e;
+        }
+
+        ui.run(function() {
+            setLoading(false, message);
+        });
+    });
+});
+
+function setLoading(loading, message) {
+    ui.btnWakeup.setEnabled(!loading);
+    ui.btnWakeup.setText(loading ? "执行中..." : "执行唤醒");
+    if (message !== undefined) {
+        ui.result.setText(String(message));
+    }
+}
+
+function loadSavedForm() {
+    ui.serverUrl.setText(getSavedValue("serverUrl", "https://abc.com"));
+    ui.username.setText(getSavedValue("username", "1234"));
+    ui.passwd.setText(getSavedValue("passwd", "1234"));
+    ui.passToken.setText(getSavedValue("passToken", "1234"));
+    ui.deviceId.setText(getSavedValue("deviceId", "2"));
+}
+
+function getSavedValue(key, defaultValue) {
+    var value = formStorage.get(key);
+    if (value === null || value === undefined || value === "") {
+        return defaultValue;
+    }
+    return String(value);
+}
+
+function saveForm(serverUrl, username, passwd, passToken, deviceIdText) {
+    formStorage.put("serverUrl", serverUrl);
+    formStorage.put("username", username);
+    formStorage.put("passwd", passwd);
+    formStorage.put("passToken", passToken);
+    formStorage.put("deviceId", deviceIdText);
+}
+
+function performWakeup(serverUrl, username, passwd, passToken, deviceId) {
+    var normalizedServerUrl = normalizeServerUrl(serverUrl);
+    var loginUrl = normalizedServerUrl + "/Action/login";
+    var callUrl = normalizedServerUrl + "/Action/call";
+    var loginBody = JSON.stringify({
+        username: username,
+        passwd: passwd,
+        pass: passToken,
+        remember_password: ""
+    });
+
+    var loginResponse = postJson(loginUrl, loginBody, null);
+    if (loginResponse.code < 200 || loginResponse.code >= 300) {
+        return "登录失败\nHTTP " + loginResponse.code + "\n" + loginResponse.body;
+    }
+
+    if (!loginResponse.cookie) {
+        return "登录失败\n服务器没有返回 Cookie\n" + loginResponse.body;
+    }
+
+    sleep(1600);
+
+    var wakeupBody = JSON.stringify({
+        func_name: "wakeup",
+        action: "wake_id",
+        param: {
+            id: deviceId
+        }
+    });
+
+    var wakeupResponse = postJson(callUrl, wakeupBody, loginResponse.cookie);
+    if (wakeupResponse.code >= 200 && wakeupResponse.code < 300) {
+        return "唤醒请求已发送\nHTTP " + wakeupResponse.code + "\n" + wakeupResponse.body;
+    }
+
+    return "唤醒失败\nHTTP " + wakeupResponse.code + "\n" + wakeupResponse.body;
+}
+
+function normalizeServerUrl(serverUrl) {
+    return String(serverUrl).replace(/\/+$/, "");
+}
+
+function postJson(url, jsonBody, cookieHeader) {
+    var connection = openUnsafeConnection(url);
+    var writer;
+    var code;
+    var body;
+    var cookie;
+    try {
+        connection.setRequestMethod("POST");
+        connection.setConnectTimeout(15000);
+        connection.setReadTimeout(20000);
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+        connection.setUseCaches(false);
+        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setRequestProperty("Accept", "application/json");
+        if (cookieHeader) {
+            connection.setRequestProperty("Cookie", cookieHeader);
+        }
+
+        writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+        writer.write(jsonBody);
+        writer.flush();
+        writer.close();
+
+        code = connection.getResponseCode();
+        body = readResponseBody(connection, code);
+        cookie = extractCookieHeader(connection);
+        return {
+            code: code,
+            body: body,
+            cookie: cookie
+        };
+    } finally {
+        connection.disconnect();
+    }
+}
+
+function openUnsafeConnection(url) {
+    var connection = new URL(url).openConnection();
+    if (!(connection instanceof HttpsURLConnection)) {
+        throw new Error("只支持 HTTPS 请求");
+    }
+    connection.setSSLSocketFactory(unsafeSocketFactory);
+    connection.setHostnameVerifier(unsafeHostnameVerifier);
+    return connection;
+}
+
+function buildUnsafeSocketFactory() {
+    var trustManager = new JavaAdapter(X509TrustManager, {
+        checkClientTrusted: function(chain, authType) {},
+        checkServerTrusted: function(chain, authType) {},
+        getAcceptedIssuers: function() {
+            return java.lang.reflect.Array.newInstance(X509Certificate, 0);
+        }
+    });
+
+    var trustManagers = java.lang.reflect.Array.newInstance(javax.net.ssl.TrustManager, 1);
+    java.lang.reflect.Array.set(trustManagers, 0, trustManager);
+
+    var sslContext = SSLContext.getInstance("TLS");
+    sslContext.init(null, trustManagers, new SecureRandom());
+    return wrapSocketFactory(sslContext.getSocketFactory());
+}
+
+function installUnsafeHttpsDefaults() {
+    HttpsURLConnection.setDefaultSSLSocketFactory(unsafeSocketFactory);
+    HttpsURLConnection.setDefaultHostnameVerifier(unsafeHostnameVerifier);
+}
+
+function wrapSocketFactory(baseFactory) {
+    return new JavaAdapter(SSLSocketFactory, {
+        getDefaultCipherSuites: function() {
+            return baseFactory.getDefaultCipherSuites();
+        },
+        getSupportedCipherSuites: function() {
+            return baseFactory.getSupportedCipherSuites();
+        },
+        createSocket: function() {
+            var socket = createSocketWithArgs(baseFactory, arguments);
+            enableAllTlsProtocols(socket);
+            return socket;
+        }
+    });
+}
+
+function createSocketWithArgs(factory, argsLike) {
+    var args = [];
+    var i;
+
+    for (i = 0; i < argsLike.length; i++) {
+        args.push(argsLike[i]);
+    }
+
+    switch (args.length) {
+        case 0:
+            return factory.createSocket();
+        case 2:
+            return factory.createSocket(args[0], args[1]);
+        case 4:
+            return factory.createSocket(args[0], args[1], args[2], args[3]);
+        default:
+            throw new Error("不支持的 SSL Socket 参数个数: " + args.length);
+    }
+}
+
+function enableAllTlsProtocols(socket) {
+    if (!(socket instanceof SSLSocket)) {
+        return;
+    }
+
+    try {
+        // 某些设备默认没有把可用 TLS 版本全部打开，这里直接启用服务端和客户端都支持的协议。
+        socket.setEnabledProtocols(socket.getSupportedProtocols());
+    } catch (e) {}
+}
+
+function extractCookieHeader(connection) {
+    var headerFields = connection.getHeaderFields();
+    var setCookieList;
+    var cookieParts;
+    var i;
+    var rawCookie;
+    var pair;
+
+    if (!headerFields) {
+        return "";
+    }
+
+    setCookieList = headerFields.get("Set-Cookie");
+    if (!setCookieList) {
+        setCookieList = headerFields.get("set-cookie");
+    }
+    if (!setCookieList) {
+        return "";
+    }
+
+    cookieParts = [];
+    for (i = 0; i < setCookieList.size(); i++) {
+        rawCookie = String(setCookieList.get(i));
+        pair = rawCookie.split(";")[0].trim();
+        if (pair) {
+            cookieParts.push(pair);
+        }
+    }
+    return cookieParts.join("; ");
+}
+
+function readResponseBody(connection, code) {
+    var stream = code >= 400 ? connection.getErrorStream() : connection.getInputStream();
+    var reader;
+    var lines;
+    var line;
+
+    if (stream == null) {
+        return "";
+    }
+
+    reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+    try {
+        lines = [];
+        line = reader.readLine();
+        while (line != null) {
+            lines.push(String(line));
+            line = reader.readLine();
+        }
+        return lines.join("\n");
+    } finally {
+        reader.close();
+    }
+}
